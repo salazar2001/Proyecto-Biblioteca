@@ -1,1 +1,2 @@
-Select * from database;
+Select * from database 
+where database = true;
