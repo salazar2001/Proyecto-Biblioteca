@@ -26,46 +26,147 @@ public class GenericResource {
      */
     public GenericResource() {
     }
-    
-    @GET
-    @Path("pruebaConsulta")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String consultaDatos(){
-        System.out.println("Hola mundo desde el WS");
-        return "Hola Mundo WS";
-    }
-    
-    @GET 
-    @Path("consultaEstudiante")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String consultaEstudiante(){
-        
-        return null; 
-    }
-    
-   /* package com.edu.umg.wsconsulta.biblioproject;
 
-import com.edu.umg.biblioteca.services.LibroService;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.util.List;
-
-@Path("WSConsulta")
-public class GenericResource {
-
-    private LibroService libroService = new LibroService();
+    @Context
+    private UriInfo context;
 
     @GET
-    @Path("consultaLibro/{nombre}")
+    @Path("/Tipos")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Libro> consultaLibro(@PathParam("nombre") String nombre) {
-        List<Libro> libros = libroService.obtenerLibrosPorNombre(nombre);
-        if (libros.isEmpty()) {
-            throw new NotFoundException("No se encontraron libros con el nombre: " + nombre);
+    public Response getTipo(@QueryParam("id") Integer id, @QueryParam("nombre") String nombre) {
+        Tipo result;
+        if (id != null) {
+            result = TiporCR.getTipoById(id);
+        } else if (nombre != null && !nombre.isEmpty()) {
+            result = TiporCR.getTipoByNombre(nombre);
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Debe proporcionar un ID o un nombre").build();
         }
-        return libros;
+
+        if (result != null) {
+            return Response.ok(result).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+    
+    @GET
+    @Path("/Autores")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAutor(@QueryParam("id") Integer id, @QueryParam("nombre") String nombre) {
+        Autor result;
+        if (id != null) {
+            result = AutorCR.getAutorById(id);
+        } else if (nombre != null && !nombre.isEmpty()) {
+            result = AutorCR.getAutorByNombre(nombre);
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Debe proporcionar un ID o un nombre").build();
+        }
+
+        if (result != null) {
+            return Response.ok(result).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    @GET
+    @Path("/Usuarios")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUsuario(@QueryParam("id") Integer id, @QueryParam("nombre") String nombre) {
+        Usuario result;
+        if (id != null) {
+            result = UsuarioCR.getUsuarioById(id);
+        } else if (nombre != null && !nombre.isEmpty()) {
+            result = UsuarioCR.getUsuarioByNombre(nombre);
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Debe proporcionar un ID o un nombre").build();
+        }
+
+        if (result != null) {
+            return Response.ok(result).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    @GET
+    @Path("/Libros")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLibro(@QueryParam("id") Integer id, @QueryParam("nombre") String nombre) {
+        Libro result;
+        if (id != null) {
+            result = LibroCR.getLibroById(id);
+        } else if (nombre != null && !nombre.isEmpty()) {
+            result = LibroCR.getLibroByNombre(nombre);
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Debe proporcionar un ID o un nombre").build();
+        }
+
+        if (result != null) {
+            return Response.ok(result).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+    
+    @GET
+    @Path("/Prestamos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPrestamo(@QueryParam("id") Integer id) {
+        if (id == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Debe proporcionar un ID").build();
+        }
+
+        Prestamo existingPrestamo = PrestamoCR.getPrestamoById(id);
+        if (existingPrestamo != null) {
+            return Response.ok(existingPrestamo).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+    
+    @GET
+    @Path("/Personal")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPersonal(@QueryParam("id") Integer id, @QueryParam("nombre") String nombre) {
+        Personal result;
+        if (id != null) {
+            result = PersonalCR.getPersonalById(id);
+        } else if (nombre != null && !nombre.isEmpty()) {
+            result = PersonalCR.getPersonalByNombre(nombre);
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Debe proporcionar un ID o un nombre").build();
+        }
+
+        if (result != null) {
+            return Response.ok(result).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    @GET
+    @Path("/Puestos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPuesto(@QueryParam("id") Integer id, @QueryParam("nombre") String nombre) {
+        Puesto result;
+        if (id != null) {
+            result = PuestoCR.getPuestoById(id);
+        } else if (nombre != null && !nombre.isEmpty()) {
+            result = PuestoCR.getPuestoByNombre(nombre);
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Debe proporcionar un ID o un nombre").build();
+        }
+
+        if (result != null) {
+            return Response.ok(result).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 }
-*/
+
+
 //localhost:8080/WSConsulta-BiblioProject/webresources/WSConsulta/pruebaConsulta
 }
