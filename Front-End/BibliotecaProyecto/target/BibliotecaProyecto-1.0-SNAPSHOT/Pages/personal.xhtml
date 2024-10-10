@@ -1,0 +1,164 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Gestión de Personal</title>
+    <style>
+        /* Centrar la barra de búsqueda */
+        .search-panel {
+            display: flex;
+            justify-content: flex-start; /* Cambiar de center a flex-start para alinear a la izquierda */
+            margin-bottom: 20px;
+        }
+
+        /* Remover bordes extra en la barra de búsqueda */
+        .search-panel .ui-panelgrid {
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Alinear etiquetas e inputs a la izquierda */
+        .search-panel .ui-outputlabel {
+            text-align: left; /* Alinear etiquetas a la izquierda */
+            margin-right: 10px; /* Espacio entre la etiqueta y el input */
+        }
+
+        .search-panel .ui-inputtext {
+            display: inline-block; /* Alinear inputs en línea con las etiquetas */
+            margin-right: 10px; /* Espacio entre los inputs */
+        }
+    </style>
+</h:head>
+
+<h:body>
+<h1 class="ui-widget-header" style="text-align: center; margin-bottom: 20px; color: #333;">Control de Personal</h1>
+
+<!-- Barra de búsqueda centrada -->
+<h:form id="formBuscarPersonal">
+    <div class="search-panel">
+        <p:panelGrid columns="4" layout="grid" styleClass="search-panel">
+            <p:commandButton value="Home" action="#{personalBean.irHome()}" icon="pi pi-home" />
+
+            <!-- Botón para mostrar el formulario de agregar personal en la misma línea -->
+            <p:commandButton value="Agregar" icon="pi pi-plus" oncomplete="PF('dlgAgregarPersonal').show();" />
+        </p:panelGrid>
+    </div>
+</h:form>
+
+<!-- Diálogo emergente para agregar personal -->
+<p:dialog header="Agregar Personal" widgetVar="dlgAgregarPersonal" modal="true" 
+          showEffect="fade" hideEffect="fade" resizable="false">
+    <h:form id="formAgregarPersonal">      
+        <p:panelGrid columns="2" style="margin-bottom: 20px;">
+            <p:outputLabel for="nombre" value="Nombre:" />
+            <p:inputText id="nombre" value="#{personalBean.nuevoPersonal.nombre}" required="true" label="Nombre" />
+
+            <p:outputLabel for="apellido" value="Apellido:" />
+            <p:inputText id="apellido" value="#{personalBean.nuevoPersonal.apellido}" required="true" label="Apellido" />
+
+            <p:outputLabel for="correo" value="Correo:" />
+            <p:inputText id="correo" value="#{personalBean.nuevoPersonal.correo}" required="true" label="Correo" />
+
+            <p:outputLabel for="telefono" value="Teléfono:" />
+            <p:inputText id="telefono" value="#{personalBean.nuevoPersonal.telefono}" required="true" label="Teléfono" />
+
+            <p:outputLabel for="fechaIngreso" value="Fecha de Ingreso:" />
+            <p:inputText id="fechaIngreso" value="#{personalBean.nuevoPersonal.fecha_ingreso}" required="true" converter="dateConverter" />
+            
+            <p:outputLabel for="puesto" value="Puesto:" />
+            <p:selectOneMenu id="puesto" value="#{personalBean.nuevoPersonal.puesto}" required="true">
+                <f:selectItems value="#{personalBean.puestos}" var="puesto" 
+                               itemValue="#{puesto}" itemLabel="#{puesto.nombre}" />
+            </p:selectOneMenu>
+        </p:panelGrid>
+
+        <p:commandButton value="Guardar" action="#{personalBean.agregarPersonal}" 
+                         update=":formAgregarPersonal:messages, :formPersonal:personalTable" 
+                         oncomplete="PF('dlgAgregarPersonal').hide();"
+                         style="margin-left: 110px;"/>
+
+        <!-- Botón para cerrar el diálogo sin agregar -->
+        <p:commandButton value="Cancelar" type="button" 
+                         onclick="PF('dlgAgregarPersonal').hide();" 
+                         style="margin-left:10px;" />
+
+        <p:messages id="messages" showDetail="true" />
+    </h:form>
+</p:dialog>
+
+<!-- Diálogo emergente para editar personal -->
+<p:dialog header="Editar Personal" widgetVar="dlgEditarPersonal" modal="true" 
+          showEffect="fade" hideEffect="fade" responsive="true" styleClass="ui-dialog-lg" resizable="false">
+    <h:form id="formEditarPersonal">  
+        <p:messages id="messages" showDetail="true" />
+        
+        <!-- Información del personal -->
+        <h:outputText value="#{personalBean.personalEditar.nombre} #{personalBean.personalEditar.apellido}" 
+                      style="font-weight: bold; margin-bottom: 10px; display: block; text-align: center;" />
+
+        <!-- Panel de edición con los campos del formulario -->
+        <p:panelGrid columns="2" columnClasses="label,value" styleClass="ui-grid-responsive" style="margin-bottom: 20px;">
+            <p:outputLabel for="correoEditar" value="Correo:*" />
+            <p:inputText id="correoEditar" value="#{personalBean.personalEditar.correo}" required="true" label="Correo" />
+
+            <p:outputLabel for="telefonoEditar" value="Teléfono:*" />
+            <p:inputText id="telefonoEditar" value="#{personalBean.personalEditar.telefono}" required="true" label="Teléfono" />
+
+            <p:outputLabel for="puestoEditar" value="Puesto:" />
+            <p:selectOneMenu id="puestoEditar" value="#{personalBean.personalEditar.puesto}" required="true">
+                <f:selectItems value="#{personalBean.puestos}" var="puesto" 
+                               itemValue="#{puesto}" itemLabel="#{puesto.nombre}" />
+            </p:selectOneMenu>
+        </p:panelGrid>
+
+        <p:commandButton value="Actualizar" action="#{personalBean.actualizarPersonal}" 
+                         style="margin-left: 70px;"
+                         update=":formPersonal:personalTable" 
+                         oncomplete="PF('dlgEditarPersonal').hide();" />
+                         
+        <p:commandButton value="Cancelar" type="button" onclick="PF('dlgEditarPersonal').hide();" 
+                         style="margin-left: 10px;" />
+    </h:form>
+</p:dialog>
+
+<!-- Tabla de personal -->
+<h:form id="formPersonal">
+    <p:panel header="Lista de Personal">      
+        <p:dataTable id="personalTable" value="#{personalBean.personalList}" var="personal" 
+                     paginator="true" rows="10" style="width:100%" widgetVar="personalTable">
+            
+            <p:column headerText="ID" sortBy="#{personal.id_personal}" filterBy="#{personal.id_personal}">
+                <h:outputText value="#{personal.id_personal}" />
+            </p:column>
+            <p:column headerText="Nombre" sortBy="#{personal.nombre}" filterBy="#{personal.nombre}">
+                <h:outputText value="#{personal.nombre}" />
+            </p:column>
+            <p:column headerText="Apellido" sortBy="#{personal.apellido}" filterBy="#{personal.apellido}">
+                <h:outputText value="#{personal.apellido}" />
+            </p:column>
+            <p:column headerText="Correo">
+                <h:outputText value="#{personal.correo}" />
+            </p:column>
+            <p:column headerText="Teléfono">
+                <h:outputText value="#{personal.telefono}" />
+            </p:column>
+            <p:column headerText="Fecha de Ingreso" sortBy="#{personal.fecha_ingreso}" filterBy="#{personal.fecha_ingreso}">
+                <h:outputText value="#{personal.fecha_ingreso}" converter="dateConverter" />
+            </p:column>
+            <p:column headerText="Puesto">
+                <h:outputText value="#{personal.puesto.nombre}" />
+            </p:column>
+            <p:column headerText="Acciones">
+                <p:commandButton value="Editar" icon="pi pi-user-edit" 
+                                 action="#{personalBean.prepararEdicion(personal)}"
+                                 oncomplete="PF('dlgEditarPersonal').show();" 
+                                 update=":formEditarPersonal" />
+            </p:column>
+        </p:dataTable>
+    </p:panel>
+</h:form>
+
+</h:body>
+</html>
