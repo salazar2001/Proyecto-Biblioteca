@@ -1,0 +1,16 @@
+com\edu\umg\controller\PersonalController.class
+com\edu\umg\model\Autor.class
+com\edu\umg\controller\TipoController.class
+com\edu\umg\extraerproperties\CargarPropiedades.class
+com\edu\umg\controller\LibroController.class
+com\edu\umg\controller\PuestoController.class
+com\edu\umg\model\Personal.class
+com\edu\umg\model\Tipo.class
+com\edu\umg\model\Usuario.class
+com\edu\umg\controller\UsuarioController.class
+com\edu\umg\controller\AutorController.class
+com\edu\umg\config\HibernateUtil.class
+com\edu\umg\model\Libro.class
+com\edu\umg\model\Puesto.class
+com\edu\umg\controller\PrestamoController.class
+com\edu\umg\model\Prestamo.class

@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Sistema de Biblioteca</title>
+    <h:outputStylesheet name="primefaces.css" />
+    <h:outputStylesheet name="theme.css" />
+</h:head>
+
+<h:body>
+    <h:form id="mainForm">
+
+        <!-- Cabecera con título -->
+        <p:panel header="Sistema de Gestión de Biblioteca" styleClass="ui-widget-header ui-corner-all">
+            <h:outputText value="Bienvenido al sistema de gestión de biblioteca. Seleccione una opción:" styleClass="ui-widget-content" />
+        </p:panel>
+
+        <!-- Menú de Navegación -->
+        <p:menubar styleClass="ui-widget-header ui-corner-all">
+            <p:submenu label="Usuarios">
+                <p:menuitem value="Control de Usuarios" outcome="usuario.xhtml" />
+            </p:submenu>
+        </p:menubar>
+        
+
+        <!-- Panel de Contenido Principal -->
+        <p:panel header="Bienvenido" styleClass="ui-widget-content ui-corner-all" style="margin-top:20px;">
+            <h:outputText value="Aquí puedes agregar más contenido o secciones." styleClass="ui-widget-content" />
+        </p:panel>
+
+        <!-- Footer -->
+        <p:panel styleClass="ui-widget-footer ui-corner-all" style="text-align:center; margin-top: 20px;">
+            <h:outputText value="© 2024 Sistema de Biblioteca. Todos los derechos reservados." />
+        </p:panel>
+    </h:form>
+</h:body>
+</html>
