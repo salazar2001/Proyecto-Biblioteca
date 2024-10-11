@@ -1,8 +1,14 @@
 com\edu\umg\entity\Autor.class
+com\edu\umg\beans\PersonalBean.class
 com\edu\umg\entity\Usuario.class
 com\edu\umg\consumoWS\WSUsuario.class
-com\edu\umg\consumoWS\WSAutor.class
-com\edu\umg\util\DateUtil.class
-com\edu\umg\beans\DateConverter.class
+com\edu\umg\entity\Puesto.class
+com\edu\umg\consumoWS\WSPuesto.class
+com\edu\umg\entity\Personal.class
 com\edu\umg\beans\AutorBean.class
 com\edu\umg\beans\UsuarioBean.class
+com\edu\umg\consumoWS\WSAutor.class
+com\edu\umg\util\DateUtil.class
+com\edu\umg\beans\PuestoBean.class
+com\edu\umg\consumoWS\WSPersonal.class
+com\edu\umg\beans\DateConverter.class

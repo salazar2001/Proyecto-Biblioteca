@@ -6,6 +6,9 @@
 <h:head>
     <title>Gestión de Autores</title>
     <style>
+        h1 {
+            font-family: 'Arial', sans-serif;
+        }
         /* Estilos personalizados */
         .search-panel {
             display: flex;
@@ -84,8 +87,6 @@
             <p:outputLabel for="observacionesEditar" value="Observaciones:" />
             <p:inputTextarea id="observacionesEditar" value="#{autorBean.autorEditar.observaciones}" />
 
-            <p:outputLabel for="fechaRegistroEditar" value="Fecha de Registro:" />
-            <p:inputText id="fechaRegistroEditar" value="#{autorBean.autorEditar.fecha_registro}" required="true" converter="dateConverter" />
         </p:panelGrid>
 
         <p:commandButton value="Actualizar" action="#{autorBean.actualizarAutor}" 

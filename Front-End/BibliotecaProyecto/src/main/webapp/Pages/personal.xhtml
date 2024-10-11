@@ -1,0 +1,275 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Gestión de Personal</title>
+    <style>
+
+        h1 {
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Centrar la barra de búsqueda */
+        .search-panel {
+            display: flex;
+            justify-content: flex-start; /* Cambiar de center a flex-start para alinear a la izquierda */
+            margin-bottom: 20px;
+        }
+
+        /* Remover bordes extra en la barra de búsqueda */
+        .search-panel .ui-panelgrid {
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Alinear etiquetas e inputs a la izquierda */
+        .search-panel .ui-outputlabel {
+            text-align: left; /* Alinear etiquetas a la izquierda */
+            margin-right: 10px; /* Espacio entre la etiqueta y el input */
+        }
+
+        .search-panel .ui-inputtext {
+            display: inline-block; /* Alinear inputs en línea con las etiquetas */
+            margin-right: 10px; /* Espacio entre los inputs */
+        }
+        
+                .estado-activo {
+            background-color: #c8e6c9; /* Color verde claro */
+            color: #2e7d32; /* Color verde más oscuro para el texto */
+            border-radius: 4px; /* Bordes redondeados */
+            padding: 5px 10px; /* Espaciado interno */
+            display: inline-block; /* Asegura que el fondo solo cubra el texto */
+        }
+
+        .estado-inactivo {
+            background-color: #ffcdd2; /* Color rojo claro */
+            color: #c62828; /* Color rojo más oscuro para el texto */
+            border-radius: 4px; /* Bordes redondeados */
+            padding: 5px 10px; /* Espaciado interno */
+            display: inline-block; /* Asegura que el fondo solo cubra el texto */
+        }
+    </style>
+</h:head>
+
+<h:body>
+<h1 class="ui-widget-header" style="text-align: center; margin-bottom: 20px; color: #333;">Control de Personal</h1>
+
+<!-- Barra de búsqueda centrada -->
+<h:form id="formBuscarPersonal">
+    <div class="search-panel">
+        <p:panelGrid columns="5" layout="grid" styleClass="search-panel">
+            <p:commandButton value="Home"  icon="pi pi-home" />
+
+            <!-- Botón para mostrar el formulario de agregar personal en la misma línea -->
+            <p:commandButton value="Agregar Personal" icon="pi pi-plus" oncomplete="PF('dlgAgregarPersonal').show();" />
+            
+        </p:panelGrid>
+    </div>
+</h:form>
+
+<!-- Diálogo emergente para agregar personal -->
+<p:dialog header="Agregar Personal" widgetVar="dlgAgregarPersonal" modal="true" 
+          showEffect="fade" hideEffect="fade" resizable="false">
+    <h:form id="formAgregarPersonal">      
+        <p:panelGrid columns="2" style="margin-bottom: 20px;">
+            <p:outputLabel for="nombre" value="Nombre:" />
+            <p:inputText id="nombre" value="#{personalBean.nuevoPersonal.nombre}" required="true" label="Nombre" />
+
+            <p:outputLabel for="apellido" value="Apellido:" />
+            <p:inputText id="apellido" value="#{personalBean.nuevoPersonal.apellido}" required="true" label="Apellido" />
+
+            <p:outputLabel for="correo" value="Correo:" />
+            <p:inputText id="correo" value="#{personalBean.nuevoPersonal.correo}" required="true" label="Correo" />
+
+            <p:outputLabel for="telefono" value="Teléfono:" />
+            <p:inputText id="telefono" value="#{personalBean.nuevoPersonal.telefono}" required="true" label="Teléfono" />
+
+            <!-- Mostrar el puesto seleccionado -->
+            <p:inputText id="puesto" value="#{personalBean.puestoSeleccionado.nombre}" disabled="true" style="display: none;" />
+        </p:panelGrid>
+         <!-- Botón para seleccionar el puesto -->
+        <p:commandButton value="Seleccionar Puesto" oncomplete="PF('dlgSeleccionarPuesto').show();" update=":formSeleccionarPuesto" styleClass="ui-button-flat" />
+
+        <p:commandButton value="Guardar" action="#{personalBean.agregarPersonal}" 
+                         update=":formAgregarPersonal:messages, :formPersonal:personalTable" 
+                         oncomplete="PF('dlgAgregarPersonal').hide();" 
+                         style="margin-left: 10px;"/>
+
+        <p:commandButton value="Cancelar" type="button" onclick="PF('dlgAgregarPersonal').hide();" style="margin-left:10px;" />
+
+        <p:messages id="messages" showDetail="true" />
+    </h:form>
+</p:dialog>
+
+<!-- Diálogo emergente para editar personal -->
+<p:dialog header="Editar Personal" widgetVar="dlgEditarPersonal" modal="true" 
+          showEffect="fade" hideEffect="fade" resizable="false">
+    <h:form id="formEditarPersonal">
+        <p:panelGrid columns="2" style="margin-bottom: 20px;">
+            <p:outputLabel for="nombreEditar" value="Nombre:" />
+            <p:inputText id="nombreEditar" value="#{personalBean.personalEditar.nombre}" required="true" label="Nombre" />
+
+            <p:outputLabel for="apellidoEditar" value="Apellido:" />
+            <p:inputText id="apellidoEditar" value="#{personalBean.personalEditar.apellido}" required="true" label="Apellido" />
+
+            <p:outputLabel for="correoEditar" value="Correo:" />
+            <p:inputText id="correoEditar" value="#{personalBean.personalEditar.correo}" required="true" label="Correo" />
+
+            <p:outputLabel for="telefonoEditar" value="Teléfono:" />
+            <p:inputText id="telefonoEditar" value="#{personalBean.personalEditar.telefono}" required="true" label="Teléfono" />
+            
+            <p:outputLabel for="estadoEditar" value="Estado:" />
+            <p:selectOneMenu id="estadoEditar" value="#{personalBean.personalEditar.estado}" required="true" label="Estado">
+                <f:selectItem itemLabel="Activo" itemValue="Activo" />
+                <f:selectItem itemLabel="Inactivo" itemValue="Inactivo" />
+            </p:selectOneMenu>
+            
+            <p:outputLabel for="puestoEditar" value="Puesto:" />
+            <p:commandButton value="Seleccionar Puesto" oncomplete="PF('dlgSeleccionarPuesto').show();" update=":formSeleccionarPuesto" />
+            <p:inputText id="puestoEditar" value="#{personalBean.personalEditar.puesto.nombre}" disabled="true" />
+        </p:panelGrid>
+
+        <p:commandButton value="Guardar" action="#{personalBean.actualizarPersonal}" 
+                         update=":formPersonal:personalTable" 
+                         oncomplete="PF('dlgEditarPersonal').hide();" />
+        <p:commandButton value="Cancelar" type="button" 
+                         onclick="PF('dlgEditarPersonal').hide();"
+                         style="margin-left:10px;"/>
+    </h:form>
+</p:dialog>
+
+<!-- Diálogo emergente para seleccionar puesto -->
+<p:dialog header="Seleccionar Puesto" widgetVar="dlgSeleccionarPuesto" modal="true" 
+          showEffect="fade" hideEffect="fade" resizable="false" style="width: 50%;">
+    <h:form id="formSeleccionarPuesto">
+        <p:dataTable id="puestosTable" value="#{personalBean.puestos}" var="puesto" selectionMode="single" 
+                     selection="#{personalBean.puestoSeleccionado}" rowKey="#{puesto.id_puesto}" 
+                     style="max-height: 300px; max-width: 400px; overflow-y: auto;">
+            <p:column headerText="Nombre">
+                <h:outputText value="#{puesto.nombre}" />
+            </p:column>
+        </p:dataTable>
+
+        <p:commandButton value="Seleccionar" actionListener="#{personalBean.seleccionarPuesto}" 
+                         update=":formEditarPersonal" oncomplete="PF('dlgSeleccionarPuesto').hide();" 
+                         style="margin-top: 10px;" /> <!-- Añade margen superior -->
+
+        <p:commandButton value="Cancelar" type="button" onclick="PF('dlgSeleccionarPuesto').hide();" 
+                         style="margin-top: 10px; margin-left: 10px;" /> 
+                     <!-- Botón para mostrar el diálogo de agregar puesto -->
+        <p:commandButton value="Agregar/Editar" styleClass="ui-button-secondary" oncomplete="PF('dlgGestionarPuestos').show();"
+                         style="margin-top: 10px;"/>
+
+    </h:form>
+</p:dialog>
+
+
+
+<!-- Tabla de personal -->
+<h:form id="formPersonal">
+    <p:panel header="Lista de Personal">      
+        <p:dataTable id="personalTable" value="#{personalBean.personalList}" var="personal" 
+                     paginator="true" rows="10" style="width:100%" widgetVar="personalTable">
+            
+            <p:column headerText="ID" sortBy="#{personal.id_personal}" filterBy="#{personal.id_personal}">
+                <h:outputText value="#{personal.id_personal}" />
+            </p:column>
+            <p:column headerText="Nombre" sortBy="#{personal.nombre}" filterBy="#{personal.nombre}">
+                <h:outputText value="#{personal.nombre}" />
+            </p:column>
+            <p:column headerText="Apellido" sortBy="#{personal.apellido}" filterBy="#{personal.apellido}">
+                <h:outputText value="#{personal.apellido}" />
+            </p:column>
+            <p:column headerText="Correo">
+                <h:outputText value="#{personal.correo}" />
+            </p:column>
+            <p:column headerText="Teléfono">
+                <h:outputText value="#{personal.telefono}" />
+            </p:column>
+            <p:column headerText="Fecha de Ingreso" sortBy="#{personal.fecha_ingreso}" filterBy="#{personal.fecha_ingreso}">
+                <h:outputText value="#{personal.fecha_ingreso}" converter="dateConverter" />
+            </p:column>
+            <p:column headerText="Puesto">
+                <h:outputText value="#{personal.puesto.nombre}" />
+            </p:column>
+            
+            <p:column headerText="Estado" sortBy="#{personal.estado}" filterBy="#{personal.estado}">
+                <h:outputText styleClass="estado-#{personal.estado.toLowerCase()}" value="#{personal.estado.toUpperCase()}" />
+            </p:column>
+
+            <p:column headerText="Acciones">
+                <p:commandButton value="Editar" icon="pi pi-user-edit" 
+                                 action="#{personalBean.prepararEdicion(personal)}"
+                                 oncomplete="PF('dlgEditarPersonal').show();" 
+                                 update=":formEditarPersonal" />
+            </p:column>
+            
+        </p:dataTable>
+    </p:panel>
+</h:form>
+
+<!-- Diálogo para gestionar puestos -->
+<p:dialog header="Gestionar Puestos" widgetVar="dlgGestionarPuestos" modal="true" closable="true" resizable="false">
+    <h:form id="formPuestosGestionar">
+        <p:dataTable id="puestosTable" value="#{puestoBean.listaPuestos}" 
+                     var="puesto" rows="5" scrollable="true" scrollHeight="200" style="max-width: 400px;">
+            <p:column headerText="Nombre">
+                <h:outputText value="#{puesto.nombre}" />
+            </p:column>
+            <p:column headerText="Acciones">
+                <p:commandButton styleClass="rounded-button ui-button-secondary" icon="pi pi-user-edit" 
+                                 action="#{puestoBean.prepararEdicion(puesto)}"
+                                 oncomplete="PF('dlgEditarPuesto').show();" 
+                                 update=":formPuestosGestionar:puestosTable" />
+            </p:column>
+        </p:dataTable>
+
+        <p:commandButton value="Agregar" icon="pi pi-plus" 
+                         oncomplete="PF('dlgAgregarPuesto').show();" />
+        <p:commandButton value="Cerrar" onclick="PF('dlgGestionarPuestos').hide();" 
+                         type="button"
+                         style="margin-left: 10px;"/>
+    </h:form>
+</p:dialog>
+
+
+<!-- Diálogo para agregar puesto -->
+<p:dialog header="Agregar Puesto" widgetVar="dlgAgregarPuesto" modal="true" closable="true" resizable="false">
+    <h:form id="formAgregarPuesto">
+        <p:outputLabel for="nombrePuesto" value="Nombre del Puesto:" />
+        <p:inputText id="nombrePuesto" value="#{puestoBean.nuevoPuesto.nombre}" required="true" />
+        
+        <p:commandButton value="Agregar Puesto" action="#{puestoBean.agregarPuesto()}" 
+                         update=":formPuestosGestionar:puestosTable :formSeleccionarPuesto:puestosTable" 
+                         oncomplete="PF('dlgAgregarPuesto').hide();"
+                         style="margin-left: 10px;"/>
+        
+        <p:commandButton value="Cancelar" onclick="PF('dlgAgregarPuesto').hide();" 
+                         type="button"
+                         style="margin-left: 10px;"/>
+    </h:form>
+</p:dialog>
+
+
+<!-- Diálogo para editar puesto -->
+<p:dialog header="Editar Puesto" widgetVar="dlgEditarPuesto" modal="true" closable="true" resizable="false">
+    <h:form id="formEditarPuesto">
+        <p:outputLabel for="nombrePuestoEditar" value="Nombre del Puesto:" />
+        <p:inputText id="nombrePuestoEditar" value="#{puestoBean.puestoEditar.nombre}" required="true" />
+        
+        <p:commandButton value="Actualizar Puesto" action="#{puestoBean.actualizarPuesto()}" 
+                         update=":formPuestosGestionar:puestosTable :formSeleccionarPuesto:puestosTable" 
+                         oncomplete="PF('dlgEditarPuesto').hide();"
+                         style="margin-left: 10px;"/>
+        
+        <p:commandButton value="Cancelar" onclick="PF('dlgEditarPuesto').hide();" 
+                         type="button"
+                         style="margin-left: 10px;"/>
+    </h:form>
+</p:dialog>
+
+
+</h:body>
+</html>
