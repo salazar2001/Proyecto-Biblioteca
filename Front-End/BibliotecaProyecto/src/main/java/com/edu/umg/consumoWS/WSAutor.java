@@ -1,6 +1,7 @@
 package com.edu.umg.consumoWS;
 
 import com.edu.umg.entity.Autor;
+import com.edu.umg.util.DateUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -9,8 +10,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,7 +48,7 @@ public class WSAutor {
             autor.setNombre((String) jsonAutor.get("nombre"));
             autor.setApellido((String) jsonAutor.get("apellido"));
             autor.setObservaciones((String) jsonAutor.get("observaciones"));
-            autor.setFecha_registro(dateFromString((String) jsonAutor.get("fecha_registro")));
+            autor.setFecha_registro(DateUtil.dateFromString((String) jsonAutor.get("fecha_registro")));
             autores.add(autor);
         }
 
@@ -64,7 +63,7 @@ public class WSAutor {
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setDoOutput(true);
 
-        String fechaRegistro = dateToString(new Date()); // Aquí se obtiene la fecha actual en formato String
+        String fechaRegistro = DateUtil.dateToString(new Date()); // Aquí se obtiene la fecha actual en formato String
         
         // Convertir el objeto Autor a JSON
         JSONObject jsonAutor = new JSONObject();
@@ -99,7 +98,7 @@ public class WSAutor {
         jsonAutor.put("nombre", autor.getNombre());
         jsonAutor.put("apellido", autor.getApellido());
         jsonAutor.put("observaciones", autor.getObservaciones());
-        jsonAutor.put("fecha_registro", dateToString(autor.getFecha_registro())); // Convertir a String
+        jsonAutor.put("fecha_registro", DateUtil.dateToString(autor.getFecha_registro())); // Convertir a String
 
         // Escribir el JSON en el cuerpo de la petición
         try (OutputStream os = conn.getOutputStream()) {
@@ -112,23 +111,5 @@ public class WSAutor {
         }
 
         conn.disconnect();
-    }
-
-
-    // Métodos de conversión de fecha
-    private String dateToString(Date date) {
-        if (date == null) {
-            return null; 
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(date);
-    }
-
-    private Date dateFromString(String dateString) throws ParseException {
-        if (dateString == null || dateString.isEmpty()) {
-            return null;
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.parse(dateString);
     }
 }

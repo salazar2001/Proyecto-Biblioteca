@@ -1,0 +1,190 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Gestión de Libros</title>
+    <style>
+        /* Centrar la barra de búsqueda */
+        .search-panel {
+            display: flex;
+            justify-content: flex-start; /* Alinear a la izquierda */
+            margin-bottom: 20px;
+        }
+
+        /* Remover bordes extra en la barra de búsqueda */
+        .search-panel .ui-panelgrid {
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Alinear etiquetas e inputs a la izquierda */
+        .search-panel .ui-outputlabel {
+            text-align: left; /* Alinear etiquetas a la izquierda */
+            margin-right: 10px; /* Espacio entre la etiqueta y el input */
+        }
+
+        .search-panel .ui-inputtext {
+            display: inline-block; /* Alinear inputs en línea con las etiquetas */
+            margin-right: 10px; /* Espacio entre los inputs */
+        }
+
+        .estado-disponible {
+            background-color: #c8e6c9; /* Color verde claro */
+            color: #2e7d32; /* Color verde más oscuro para el texto */
+            border-radius: 4px; /* Bordes redondeados */
+            padding: 5px 10px; /* Espaciado interno */
+            display: inline-block; /* Asegura que el fondo solo cubra el texto */
+        }
+
+        .estado-no-disponible {
+            background-color: #ffcdd2; /* Color rojo claro */
+            color: #c62828; /* Color rojo más oscuro para el texto */
+            border-radius: 4px; /* Bordes redondeados */
+            padding: 5px 10px; /* Espaciado interno */
+            display: inline-block; /* Asegura que el fondo solo cubra el texto */
+        }
+    </style>
+</h:head>
+
+<h:body>
+<h1 class="ui-widget-header" style="text-align: center; margin-bottom: 20px; color: #333;">Control de Libros</h1>
+
+<!-- Barra de búsqueda centrada -->
+<h:form id="formBuscarLibro">
+    <div class="search-panel">
+        <p:panelGrid columns="3" layout="grid" styleClass="search-panel" >
+            <p:commandButton value="Home" action="#{navigationBean.irHome()}" icon="pi pi-home" />
+
+            <!-- Botón para mostrar el formulario de agregar libro -->
+            <p:commandButton value="Agregar" icon="pi pi-plus" oncomplete="PF('dlgAgregarLibro').show();" />
+        </p:panelGrid>
+    </div>
+</h:form>
+
+<!-- Diálogo emergente para agregar libro -->
+<p:dialog header="Agregar Libro" widgetVar="dlgAgregarLibro" modal="true" 
+          showEffect="fade" hideEffect="fade" resizable="false">
+    <h:form id="formAgregarLibro">      
+        <p:panelGrid columns="2" style="margin-bottom: 20px;">
+            <p:outputLabel for="titulo" value="Título:" />
+            <p:inputText id="titulo" value="#{libroBean.nuevoLibro.titulo}" required="true" label="Título" />
+
+            <p:outputLabel for="isbn" value="ISBN:" />
+            <p:inputText id="isbn" value="#{libroBean.nuevoLibro.isbn}" required="true" label="ISBN" />
+
+            <p:outputLabel for="numeroPaginas" value="Número de Páginas:" />
+            <p:inputText id="numeroPaginas" value="#{libroBean.nuevoLibro.numero_paginas}" required="true" label="Número de Páginas" />
+
+            <p:outputLabel for="fechaPublicacion" value="Fecha de Publicación:" />
+            <p:inputText id="fechaPublicacion" value="#{libroBean.nuevoLibro.fecha_publicacion}" required="true" converter="dateConverter" />
+
+            <p:outputLabel for="Autor" value="Autor:" />
+            <p:inputText id="Autor" value="#{libroBean.autorSeleccionado.nombre}" disabled="true" />
+            
+            <p:outputLabel for="Tipo" value="Tipo:" />
+            <p:inputText id="Tipo" value="#{libroBean.tipoSeleccionado.nombre}" disabled="true" />
+        </p:panelGrid>
+        
+        <!-- Botón para seleccionar el puesto -->
+        <p:commandButton value="Selec Autor" oncomplete="PF('dlgSeleccionarAutor').show();" 
+                         update=":formSeleccionarAutor" styleClass="ui-button-flat" />
+        
+        <p:commandButton value="Selec Tipo" oncomplete="PF('dlgSeleccionarTipo').show();" 
+                         update=":formSeleccionarTipo" styleClass="ui-button-flat" />
+        
+        <p:commandButton value="Guardar" action="#{libroBean.agregarLibro}" 
+                         update=":formAgregarLibro:messages, :formLibros:libroTable" 
+                         oncomplete="PF('dlgAgregarLibro').hide();"
+                         style="margin-left: 40px;"/>
+
+        <!-- Botón para cerrar el diálogo sin agregar -->
+        <p:commandButton value="Cancelar" type="button" 
+                         onclick="PF('dlgAgregarLibro').hide();" 
+                         style="margin-left:10px;" />
+
+        <p:messages id="messages" showDetail="true" />
+    </h:form>
+</p:dialog>
+
+<!-- Diálogo emergente para seleccionar puesto -->
+<p:dialog header="Seleccionar Autor" widgetVar="dlgSeleccionarAutor" modal="true" 
+          showEffect="fade" hideEffect="fade" resizable="false" style="width: 50%;">
+    <h:form id="formSeleccionarAutor">
+        <p:dataTable id="autorTable" value="#{libroBean.autores}" var="autor" selectionMode="single" 
+                     selection="#{libroBean.autorSeleccionado}" rowKey="#{autor.id_autor}" 
+                     style="max-height: 300px; max-width: 400px; overflow-y: auto;" lazy="false">
+            <p:column headerText="Nombre">
+                <h:outputText value="#{autor.nombre}" />
+            </p:column>
+        </p:dataTable>
+
+        <p:commandButton value="Seleccionar" actionListener="#{libroBean.seleccionarAutor()}" 
+                         update=":formAgregarLibro" oncomplete="PF('dlgSeleccionarAutor').hide();" 
+                         style="margin-top: 10px;" /> <!-- Añade margen superior -->
+
+        <p:commandButton value="Cancelar" type="button" onclick="PF('dlgSeleccionarAutor').hide();" 
+                         style="margin-top: 10px; margin-left: 10px;" /> 
+    </h:form>
+</p:dialog>
+
+<!-- Diálogo emergente para seleccionar tipo -->
+<p:dialog header="Seleccionar Tipo" widgetVar="dlgSeleccionarTipo" modal="true" 
+          showEffect="fade" hideEffect="fade" resizable="false" style="width: 50%;">
+    <h:form id="formSeleccionarTipo">
+        <p:dataTable id="tipoTable" value="#{libroBean.tipos}" var="tipo" selectionMode="single" 
+                     selection="#{libroBean.tipoSeleccionado}" rowKey="#{tipo.id_tipo}" 
+                     style="max-height: 300px; max-width: 400px; overflow-y: auto;" lazy="false">
+            <p:column headerText="Nombre">
+                <h:outputText value="#{tipo.nombre}" />
+            </p:column>
+        </p:dataTable>
+
+        <p:commandButton value="Seleccionar" actionListener="#{libroBean.seleccionarTipo()}" 
+                         update=":formAgregarLibro" oncomplete="PF('dlgSeleccionarTipo').hide();" 
+                         style="margin-top: 10px;" /> <!-- Añade margen superior -->
+
+        <p:commandButton value="Cancelar" type="button" onclick="PF('dlgSeleccionarTipo').hide();" 
+                         style="margin-top: 10px; margin-left: 10px;" /> 
+    </h:form>
+</p:dialog>
+
+
+<!-- Tabla de libros -->
+<h:form id="formLibros">
+    <p:panel header="Lista de Libros">      
+        <p:dataTable id="libroTable" value="#{libroBean.libros}" var="libro" 
+                     paginator="true" rows="10" style="width:100%" widgetVar="libroTable" lazy="false">
+            
+            <p:column headerText="Título" sortBy="#{libro.titulo}" filterBy="#{libro.titulo}">
+                <h:outputText value="#{libro.titulo}" />
+            </p:column>
+            <p:column headerText="Autor" sortBy="#{libro.autor.nombre}" filterBy="#{libro.autor.nombre}">
+                <h:outputText value="#{libro.autor.nombre}" />
+            </p:column>
+            <p:column headerText="Tipo" sortBy="#{libro.tipo.nombre}" filterBy="#{libro.tipo.nombre}">
+                <h:outputText value="#{libro.tipo.nombre}" />
+            </p:column>
+            <p:column headerText="ISBN">
+                <h:outputText value="#{libro.isbn}" />
+            </p:column>
+            <p:column headerText="Número de Páginas">
+                <h:outputText value="#{libro.numero_paginas}" />
+            </p:column>
+            <p:column headerText="Descripción">
+                <h:outputText value="#{libro.descripcion}" />
+            </p:column>
+            <p:column headerText="Fecha de Publicación" sortBy="#{libro.fecha_publicacion}" filterBy="#{libro.fecha_publicacion}">
+                <h:outputText value="#{libro.fecha_publicacion}" converter="dateConverter" />
+            </p:column>
+            <p:column headerText="Estado" sortBy="#{libro.estado}" filterBy="#{libro.estado}">
+                <h:outputText styleClass="estado-#{libro.estado.toLowerCase()} " value="#{libro.estado.toUpperCase()}" />
+            </p:column>
+            
+        </p:dataTable>
+    </p:panel>
+</h:form>
+
+</h:body>
+</html>

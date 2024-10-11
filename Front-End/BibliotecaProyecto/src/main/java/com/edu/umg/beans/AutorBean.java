@@ -69,10 +69,6 @@ public class AutorBean implements Serializable {
         }
     }
     
-    public String irHome() {
-        return "home?faces-redirect=true";
-    }
-
     // Llamar a este método en onHide para limpiar el diálogo cuando se cierre
     public void limpiarEdicion() {
         autorEditar = new Autor();

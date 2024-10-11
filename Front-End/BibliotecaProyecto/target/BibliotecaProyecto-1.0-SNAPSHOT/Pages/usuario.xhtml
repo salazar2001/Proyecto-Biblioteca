@@ -6,9 +6,6 @@
 <h:head>
     <title>Gestión de Usuarios</title>
     <style>
-        h1 {
-            font-family: 'Arial', sans-serif;
-        }
         /* Centrar la barra de búsqueda */
         .search-panel {
             display: flex;
@@ -60,7 +57,7 @@
     <div class="search-panel">
         <p:panelGrid columns="5" layout="grid" styleClass="search-panel" >
             
-            <p:commandButton value="Home" action="#{usuarioBean.irHome()}"   icon="pi pi-home" />
+            <p:commandButton value="Home" action="#{navigationBean.irHome()}"   icon="pi pi-home" />
 
             <!-- Botón para mostrar el formulario de agregar usuario -->
             <p:commandButton value="Agregar" icon="pi pi-plus" oncomplete="PF('dlgAgregarUsuario').show();" />

@@ -12,6 +12,7 @@ public class Puesto {
     public void setId_puesto(int id_puesto) {
         this.id_puesto = id_puesto;
     }
+        
 
     public String getNombre() {
         return nombre;

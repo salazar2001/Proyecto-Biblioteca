@@ -81,12 +81,6 @@ public class UsuarioBean implements Serializable {
         usuarioEditar = new Usuario();
     }
 
-    
-    public String irHome() {
-        return "home?faces-redirect=true";
-    }
-
-
     // Getters y Setters
     public List<Usuario> getUsuarios() {
         return usuarios;
