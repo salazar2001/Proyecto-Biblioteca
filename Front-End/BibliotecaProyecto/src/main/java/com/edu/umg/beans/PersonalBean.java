@@ -21,6 +21,7 @@ public class PersonalBean implements Serializable {
     private Personal nuevoPersonal;         // Personal nuevo para agregar
     private Personal personalEditar;        // Personal que se está editando
     private WSPersonal wsPersonal;          // Cliente WS para realizar las operaciones
+
     private WSPuesto wsPuesto;              // Cliente WS para obtener puestos
     private List<Puesto> puestos;           // Lista de puestos
     private Puesto puestoSeleccionado;      // Puesto seleccionado en el diálogo
@@ -111,6 +112,15 @@ public class PersonalBean implements Serializable {
         this.nuevoPersonal = nuevoPersonal;
     }
 
+    public Personal getPersonalEditar() {
+        return personalEditar;
+    }
+
+    public void setPersonalEditar(Personal personalEditar) {
+        this.personalEditar = personalEditar;
+    }
+
+
     public List<Puesto> getPuestos() {
         return puestos;
     }
@@ -126,12 +136,5 @@ public class PersonalBean implements Serializable {
     public void setPuestoSeleccionado(Puesto puestoSeleccionado) {
         this.puestoSeleccionado = puestoSeleccionado;
     }
-    
-    public Personal getPersonalEditar() {
-        return personalEditar;
-    }
 
-    public void setPersonalEditar(Personal personalEditar) {
-        this.personalEditar = personalEditar;
-    }
 }

@@ -2,37 +2,151 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
+    
 <h:head>
-    <title>Sistema de Biblioteca</title>
-    <h:outputStylesheet name="primefaces.css" />
-    <h:outputStylesheet name="theme.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Biblioteca Municipal - Página de Inicio</title>
+    <style type="text/css">
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background-color: #1195E0;
+            color: white;
+            padding: 1rem 0;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .hero {
+            background-image: url('/placeholder.svg?height=600&amp;width=800');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+        }
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: inline-block;
+            padding: 10px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: inline-block;
+            padding: 10px;
+        }
+        .services {
+            background-color: #f4f4f4;
+            padding: 4rem 0;
+        }
+        .services h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .service-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+        }
+        .service-card h3 {
+            margin-top: 0;
+        }
+        .service-card a {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+        .service-card a:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            background-color: #1195E0;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+        footer a {
+            color: #ddd;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </h:head>
-
 <h:body>
-    <h:form id="mainForm">
+    <header>
+        <div class="container">
+            <h2>Bienvenido a Biblioteca</h2>
+        </div>
+    </header>
 
-        <!-- Cabecera con título -->
-        <p:panel header="Sistema de Gestión de Biblioteca" styleClass="ui-widget-header ui-corner-all">
-            <h:outputText value="Bienvenido al sistema de gestión de biblioteca. Seleccione una opción:" styleClass="ui-widget-content" />
-        </p:panel>
+    <main>
+        <section class="services">
+            <div class="container">
+                <h2>Opciones Principales</h2>
+                <div class="service-grid">
+                    <div class="service-card">
+                        <h3>Préstamos</h3>
+                        <p>Gestionar préstamos de libros</p>
+                        <p:linkButton value="Ir a Prestamo" outcome="prestamo?faces-redirect=true"/>
+                    </div>
+                    <div class="service-card">
+                        <h3>Libros</h3>
+                        <p>Gestionar libros</p>
+                        <p:linkButton value="Ir a Libros" outcome="libro?faces-redirect=true"/>
+                    </div>
+                    <div class="service-card">
+                        <h3>Autores</h3>
+                        <p>Gestionar autores</p>
+                        <p:linkButton value="Ir a Autores" outcome="autor?faces-redirect=true"/>
+                    </div>
+                    <div class="service-card">
+                        <h3>Personal</h3>
+                        <p>Gestionar personal</p>
+                        <p:linkButton value="Ir a Personal" outcome="personal?faces-redirect=true"/>
+                    </div>
+                    <div class="service-card">
+                        <h3>Usuarios</h3>
+                        <p>Gestionar usuarios</p>
+                        <p:linkButton value="Ir a Usuarios" outcome="usuario?faces-redirect=true"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-        <!-- Menú de Navegación -->
-        <p:menubar styleClass="ui-widget-header ui-corner-all">
-            <p:submenu label="Usuarios">
-                <p:menuitem value="Control de Usuarios" outcome="usuario.xhtml" />
-            </p:submenu>
-        </p:menubar>
-        
-
-        <!-- Panel de Contenido Principal -->
-        <p:panel header="Bienvenido" styleClass="ui-widget-content ui-corner-all" style="margin-top:20px;">
-            <h:outputText value="Aquí puedes agregar más contenido o secciones." styleClass="ui-widget-content" />
-        </p:panel>
-
-        <!-- Footer -->
-        <p:panel styleClass="ui-widget-footer ui-corner-all" style="text-align:center; margin-top: 20px;">
-            <h:outputText value="© 2024 Sistema de Biblioteca. Todos los derechos reservados." />
-        </p:panel>
-    </h:form>
+    <footer>
+        <div class="container">
+            <p>© 2024 Biblioteca.</p>
+        </div>
+    </footer>
 </h:body>
 </html>

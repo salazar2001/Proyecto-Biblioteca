@@ -6,9 +6,6 @@
 <h:head>
     <title>Gestión de Autores</title>
     <style>
-        h1 {
-            font-family: 'Arial', sans-serif;
-        }
         /* Estilos personalizados */
         .search-panel {
             display: flex;
@@ -37,7 +34,7 @@
 <h:form id="formBuscarAutor">
     <div class="search-panel">
         <p:panelGrid columns="4" layout="grid" styleClass="search-panel" >
-            <p:commandButton value="Home" action="#{autorBean.irHome()}" icon="pi pi-home" />
+            <p:commandButton value="Home" action="#{navigationBean.irHome()}" icon="pi pi-home" />
             <p:commandButton value="Agregar" icon="pi pi-plus" oncomplete="PF('dlgAgregarAutor').show();" />
         </p:panelGrid>
     </div>
