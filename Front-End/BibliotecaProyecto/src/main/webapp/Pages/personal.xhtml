@@ -60,7 +60,7 @@
 <h:form id="formBuscarPersonal">
     <div class="search-panel">
         <p:panelGrid columns="5" layout="grid" styleClass="search-panel">
-            <p:commandButton value="Home"  icon="pi pi-home" />
+            <p:commandButton value="Home"  icon="pi pi-home" action="#{navigationBean.irHome()}" />
 
             <!-- Botón para mostrar el formulario de agregar personal en la misma línea -->
             <p:commandButton value="Agregar Personal" icon="pi pi-plus" oncomplete="PF('dlgAgregarPersonal').show();" />
