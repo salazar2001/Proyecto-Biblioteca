@@ -6,14 +6,15 @@
 <h:head>
     <title>Gestión de Usuarios</title>
     <style>
+        h1 {
+            font-family: 'Arial', sans-serif;
+        }
         /* Centrar la barra de búsqueda */
         .search-panel {
             display: flex;
             justify-content: flex-start; /* Cambiar de center a flex-start para alinear a la izquierda */
             margin-bottom: 20px;
         }
-
-
 
         /* Remover bordes extra en la barra de búsqueda */
         .search-panel .ui-panelgrid {
@@ -57,11 +58,11 @@
 <!-- Barra de búsqueda centrada -->
 <h:form id="formBuscarUsuario">
     <div class="search-panel">
-        <p:panelGrid columns="4" layout="grid" styleClass="search-panel" >
+        <p:panelGrid columns="5" layout="grid" styleClass="search-panel" >
             
             <p:commandButton value="Home" action="#{usuarioBean.irHome()}"   icon="pi pi-home" />
 
-            <!-- Botón para mostrar el formulario de agregar usuario en la misma línea -->
+            <!-- Botón para mostrar el formulario de agregar usuario -->
             <p:commandButton value="Agregar" icon="pi pi-plus" oncomplete="PF('dlgAgregarUsuario').show();" />
         </p:panelGrid>
     </div>

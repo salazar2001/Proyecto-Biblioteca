@@ -11,93 +11,90 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean(name = "personalBean")
 @SessionScoped
 public class PersonalBean implements Serializable {
 
-    private List<Personal> personalList;      // Lista de personal para mostrar en la tabla
-    private Personal nuevoPersonal;            // Personal nuevo para agregar
-    private Personal personalEditar;           // Personal que se está editando
-    private WSPersonal wsPersonal;             // Cliente WS para realizar las operaciones
-    private WSPuesto wsPuesto;                 // Cliente WS para obtener puestos
-    private List<Puesto> puestos;              // Lista de puestos
+    private List<Personal> personalList;    // Lista de personal para mostrar en la tabla
+    private Personal nuevoPersonal;         // Personal nuevo para agregar
+    private Personal personalEditar;        // Personal que se está editando
+    private WSPersonal wsPersonal;          // Cliente WS para realizar las operaciones
+    private WSPuesto wsPuesto;              // Cliente WS para obtener puestos
+    private List<Puesto> puestos;           // Lista de puestos
+    private Puesto puestoSeleccionado;      // Puesto seleccionado en el diálogo
 
     @PostConstruct
     public void init() {
         wsPersonal = new WSPersonal();
         wsPuesto = new WSPuesto();
-        cargarPersonal();                       // Inicializa la lista de personal
-        cargarPuestos();                        // Inicializa la lista de puestos
-        nuevoPersonal = new Personal();         // Inicializa el objeto nuevoPersonal
-        personalEditar = new Personal();        // Inicializa el objeto personalEditar
+        cargarPersonal();                   // Inicializa la lista de personal
+        cargarPuestos();                    // Inicializa la lista de puestos
+        nuevoPersonal = new Personal();     // Inicializa el objeto nuevoPersonal
+        personalEditar = new Personal();    // Inicializa el objeto personalEditar
     }
 
     // Método para cargar la lista de personal
     public void cargarPersonal() {
         try {
-            personalList = wsPersonal.obtenerPersonal(); // Asegúrate que este método funcione correctamente
+            personalList = wsPersonal.obtenerPersonal();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                "Error", "No se pudieron cargar el personal: " + e.getMessage()));
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo cargar el personal: " + e.getMessage()));
         }
     }
 
     // Método para cargar la lista de puestos
     public void cargarPuestos() {
         try {
-            puestos = wsPuesto.obtenerPuestos(); // Asegúrate que este método funcione correctamente
+            puestos = wsPuesto.obtenerPuestos();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                "Error", "No se pudieron cargar los puestos: " + e.getMessage()));
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo cargar los puestos: " + e.getMessage()));
         }
+    }
+    
+    // Prepara la edición cargando los datos del personal seleccionado
+    public void prepararEdicion(Personal personal) {
+        this.personalEditar = personal;
+        this.puestoSeleccionado = personal.getPuesto();
     }
 
     // Método para agregar un nuevo personal
     public void agregarPersonal() {
         try {
-            wsPersonal.crearPersonal(nuevoPersonal); // Llamada al servicio web para agregar el personal
-            nuevoPersonal = new Personal();           // Limpia el formulario después de agregar
-            cargarPersonal();                         // Refresca la lista de personal
+            nuevoPersonal.setPuesto(puestoSeleccionado);  // Asigna el puesto seleccionado
+            wsPersonal.crearPersonal(nuevoPersonal);      // Llama al servicio web para crear el personal
+            nuevoPersonal = new Personal();
+            cargarPersonal();   // Refresca la lista de personal
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                "Error", "No se pudo agregar el personal: " + e.getMessage()));
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo agregar el personal: " + e.getMessage()));
         }
     }
 
-    // Método para preparar la edición de un personal
-    public void prepararEdicion(Personal personal) {
-        this.personalEditar = personal; // Asigna el personal seleccionado a la propiedad personalEditar
-    }
-
-    // Método para actualizar un personal
+    // Método para actualizar el personal editado
     public void actualizarPersonal() {
         try {
-            wsPersonal.actualizarPersonal(personalEditar); // Llamada al servicio web para actualizar el personal
-            cargarPersonal(); // Refresca la lista de personal después de la actualización
-            personalEditar = new Personal(); // Limpia el objeto personalEditar
+            personalEditar.setPuesto(puestoSeleccionado);  // Actualiza el puesto seleccionado
+            wsPersonal.actualizarPersonal(personalEditar); // Llama al servicio web para actualizar el personal
+            cargarPersonal();   // Refresca la lista de personal
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                "Error", "No se pudo actualizar el personal: " + e.getMessage()));
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo actualizar el personal: " + e.getMessage()));
+        }
+    }
+
+    // Método para seleccionar un puesto
+    public void seleccionarPuesto() {
+        if (puestoSeleccionado != null) {
+            personalEditar.setPuesto(puestoSeleccionado); // Asigna el puesto seleccionado al personal editado
         }
     }
     
-    public String irHome() {
-        return "home?faces-redirect=true";
-    }
-
-    // Llamar a este método en onHide para limpiar el diálogo cuando se cierre
-    public void limpiarEdicion() {
-        personalEditar = new Personal();
-    }
-
     // Getters y Setters
+
     public List<Personal> getPersonalList() {
         return personalList;
     }
@@ -114,15 +111,27 @@ public class PersonalBean implements Serializable {
         this.nuevoPersonal = nuevoPersonal;
     }
 
+    public List<Puesto> getPuestos() {
+        return puestos;
+    }
+
+    public void setPuestos(List<Puesto> puestos) {
+        this.puestos = puestos;
+    }
+
+    public Puesto getPuestoSeleccionado() {
+        return puestoSeleccionado;
+    }
+
+    public void setPuestoSeleccionado(Puesto puestoSeleccionado) {
+        this.puestoSeleccionado = puestoSeleccionado;
+    }
+    
     public Personal getPersonalEditar() {
         return personalEditar;
     }
 
     public void setPersonalEditar(Personal personalEditar) {
         this.personalEditar = personalEditar;
-    }
-
-    public List<Puesto> getPuestos() {
-        return puestos;
     }
 }
