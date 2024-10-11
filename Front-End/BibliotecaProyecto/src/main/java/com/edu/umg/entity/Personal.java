@@ -9,6 +9,7 @@ public class Personal {
     private String correo;
     private String telefono;
     private Date fecha_ingreso;
+    private String estado;
     private Puesto puesto; // Relación con Puesto
 
     // Getters y Setters
@@ -67,4 +68,12 @@ public class Personal {
     public void setPuesto(Puesto puesto) {
         this.puesto = puesto;
     }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }  
 }

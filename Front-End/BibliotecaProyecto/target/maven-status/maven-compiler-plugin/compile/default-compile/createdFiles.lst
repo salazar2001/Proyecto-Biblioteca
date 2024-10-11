@@ -9,5 +9,6 @@ com\edu\umg\beans\AutorBean.class
 com\edu\umg\beans\UsuarioBean.class
 com\edu\umg\consumoWS\WSAutor.class
 com\edu\umg\util\DateUtil.class
+com\edu\umg\beans\PuestoBean.class
 com\edu\umg\consumoWS\WSPersonal.class
 com\edu\umg\beans\DateConverter.class

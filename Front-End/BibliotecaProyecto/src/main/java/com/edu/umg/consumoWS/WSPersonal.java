@@ -2,6 +2,7 @@ package com.edu.umg.consumoWS;
 
 import com.edu.umg.entity.Personal;
 import com.edu.umg.entity.Puesto;
+import com.edu.umg.util.DateUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,8 +12,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,7 +51,8 @@ public class WSPersonal {
             personal.setApellido((String) jsonPersonal.get("apellido"));
             personal.setCorreo((String) jsonPersonal.get("correo"));
             personal.setTelefono((String) jsonPersonal.get("telefono"));
-            personal.setFecha_ingreso(dateFromString((String) jsonPersonal.get("fecha_ingreso")));
+            personal.setEstado((String) jsonPersonal.get("estado"));
+            personal.setFecha_ingreso(DateUtil.dateFromString((String) jsonPersonal.get("fecha_ingreso")));
 
             // Manejo de la relación con Puesto
             JSONObject jsonPuesto = (JSONObject) jsonPersonal.get("puesto");
@@ -75,21 +75,24 @@ public class WSPersonal {
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setDoOutput(true);
-
+        String fechaRegistro = DateUtil.dateToString(new Date()); // Aquí se obtiene la fecha actual en formato String
         // Convertir el objeto Personal a JSON
         JSONObject jsonPersonal = new JSONObject();
         jsonPersonal.put("nombre", personal.getNombre());
         jsonPersonal.put("apellido", personal.getApellido());
         jsonPersonal.put("correo", personal.getCorreo());
         jsonPersonal.put("telefono", personal.getTelefono());
-        jsonPersonal.put("fecha_ingreso", dateToString(personal.getFecha_ingreso()));
+        jsonPersonal.put("fecha_ingreso", fechaRegistro);
+        jsonPersonal.put("estado", "Activo");
         
         // Manejo de la relación con Puesto
         if (personal.getPuesto() != null) {
             JSONObject jsonPuesto = new JSONObject();
             jsonPuesto.put("id_puesto", personal.getPuesto().getId_puesto());
-            jsonPersonal.put("puesto", jsonPuesto);
+            jsonPuesto.put("nombre", personal.getPuesto().getNombre());
+            jsonPersonal.put("puesto", jsonPuesto); // Cambia "nombre" por "puesto"
         }
+
 
         // Escribir el JSON en el cuerpo de la petición
         try (OutputStream os = conn.getOutputStream()) {
@@ -118,15 +121,16 @@ public class WSPersonal {
         jsonPersonal.put("apellido", personal.getApellido());
         jsonPersonal.put("correo", personal.getCorreo());
         jsonPersonal.put("telefono", personal.getTelefono());
-        jsonPersonal.put("fecha_ingreso", dateToString(personal.getFecha_ingreso()));
+        jsonPersonal.put("fecha_ingreso", DateUtil.dateToString(personal.getFecha_ingreso()));
+        jsonPersonal.put("estado", personal.getEstado());
 
         // Manejo de la relación con Puesto
         if (personal.getPuesto() != null) {
             JSONObject jsonPuesto = new JSONObject();
             jsonPuesto.put("id_puesto", personal.getPuesto().getId_puesto());
-            jsonPersonal.put("puesto", jsonPuesto);
+            jsonPuesto.put("nombre", personal.getPuesto().getNombre());
+            jsonPersonal.put("puesto", jsonPuesto); 
         }
-
         // Escribir el JSON en el cuerpo de la petición
         try (OutputStream os = conn.getOutputStream()) {
             byte[] input = jsonPersonal.toJSONString().getBytes("utf-8");
@@ -140,20 +144,4 @@ public class WSPersonal {
         conn.disconnect();
     }
 
-    // Métodos de conversión de fecha
-    private String dateToString(Date date) {
-        if (date == null) {
-            return null;
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(date);
-    }
-
-    private Date dateFromString(String dateString) throws ParseException {
-        if (dateString == null || dateString.isEmpty()) {
-            return null;
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.parse(dateString);
-    }
 }
