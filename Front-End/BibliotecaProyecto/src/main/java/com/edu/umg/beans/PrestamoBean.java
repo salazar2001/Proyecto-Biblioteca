@@ -12,6 +12,8 @@ import com.edu.umg.entity.Prestamo;
 import com.edu.umg.entity.Usuario;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -35,6 +37,8 @@ public class PrestamoBean implements Serializable {
     private Usuario usuarioSeleccionado;
     private WSUsuario wsUsuario;
     
+    private Libro actLibro;
+    
     @PostConstruct
     public void init() {
         wsPrestamo = new WSPrestamo();
@@ -45,6 +49,7 @@ public class PrestamoBean implements Serializable {
         cargarLibros();
         cargarUsuarios();
         
+        prestamoEditar = new Prestamo();
         nuevoPrestamo = new Prestamo();         // Inicializa el objeto nuevoLibro       
         
     }
@@ -82,37 +87,23 @@ public class PrestamoBean implements Serializable {
         }
     }
     
-    // Método para preparar la edición de un préstamo
-    public void prepararEdicion(Prestamo prestamo) {
-        this.prestamoEditar = prestamo; // Asigna el préstamo seleccionado a la propiedad prestamoEditar
-    }
-
-    
     // Método para agregar un nuevo libro
     public void agregarPrestamo() {
         try {
-            if (usuarioSeleccionado == null) {
-                FacesContext.getCurrentInstance().addMessage(null, 
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                    "Error", "Debes seleccionar un usuario."));
-                return;
+            
+                if ("disponible".equals(libroSeleccionado.getEstado().toLowerCase())) {
+                nuevoPrestamo.setLibro(libroSeleccionado);
+                libroSeleccionado.setEstado("no-disponible");
+                wsLibro.actualizarLibro(libroSeleccionado);
             }
-
-            if (libroSeleccionado == null) {
-                FacesContext.getCurrentInstance().addMessage(null, 
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                    "Error", "Debes seleccionar el libro."));
-                return; // Salir si no hay tipo seleccionado
-            }
-
-            nuevoPrestamo.setUsuario(usuarioSeleccionado);
+        
             nuevoPrestamo.setLibro(libroSeleccionado);
+            nuevoPrestamo.setUsuario(usuarioSeleccionado);
             wsPrestamo.crearPrestamo(nuevoPrestamo);
             
-            nuevoPrestamo = new Prestamo();
+            nuevoPrestamo = new Prestamo(); 
+            cargarPrestamo();
 
-            cargarLibros();                    // Refresca la lista de libros
-            cargarUsuarios();                   // Refresca la lista de autores
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, 
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -120,46 +111,35 @@ public class PrestamoBean implements Serializable {
         }
     }
     
+    // Método para preparar la edición de un préstamo
+    public void prepararEdicion(Prestamo prestamo) {
+        this.prestamoEditar = prestamo; // Asigna el préstamo seleccionado a la propiedad prestamoEditar
+        
+    }
+    
+    
+    
     // Método para actualizar un préstamo existente
-    public void actualizarPrestamo() {
+    public void actualizarPrestamo() {      
         try {
-            // Verificar que un préstamo esté seleccionado
-            if (prestamoEditar == null) {
-                FacesContext.getCurrentInstance().addMessage(null, 
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                    "Error", "Debes seleccionar un préstamo para actualizar."));
-                return;
-            }
-
-            // Verificar que un usuario esté seleccionado
-            if (usuarioSeleccionado == null) {
-                FacesContext.getCurrentInstance().addMessage(null, 
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                    "Error", "Debes seleccionar un usuario."));
-                return;
-            }
-
-            // Verificar que un libro esté seleccionado
-            if (libroSeleccionado == null) {
-                FacesContext.getCurrentInstance().addMessage(null, 
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                    "Error", "Debes seleccionar un libro."));
-                return;
-            }
-
-            // Configurar los detalles del préstamo a actualizar
-            prestamoEditar.setUsuario(usuarioSeleccionado);
-            prestamoEditar.setLibro(libroSeleccionado);
-
-            // Llamar al método del WS para actualizar el préstamo
-            wsPrestamo.actualizarPrestamo(prestamoEditar);
-
+                // Llamar al método del WS para actualizar el préstamo
+                wsPrestamo.actualizarPrestamo(prestamoEditar);
+                
+        
+                if("entregado".equals(prestamoEditar.getEstado().toLowerCase())){
+                    Libro libro = prestamoEditar.getLibro();
+                    libro.setEstado("disponible");
+            
+                    // Llamar al WS para actualizar el libro
+                    wsLibro.actualizarLibro(libro);
+                }
+            
             // Limpiar la selección
-            prestamoEditar = null; // Limpiar el préstamo en edición
-
-            // Refrescar las listas después de la actualización
-            cargarLibros();    // Refresca la lista de libros
-            cargarUsuarios();   // Refresca la lista de usuarios
+            
+            prestamoEditar = new Prestamo();
+            cargarPrestamo();
+            cargarLibros();
+            cargarUsuarios();
 
             // Mensaje de éxito
             FacesContext.getCurrentInstance().addMessage(null, 
@@ -171,12 +151,79 @@ public class PrestamoBean implements Serializable {
                 "Error", "No se pudo actualizar el préstamo: " + e.getMessage()));
         }
     }
+    
+    
+    
+    
+    
+    public void seleccionarLibro() throws Exception{
+        if(libroSeleccionado != null){
 
+                nuevoPrestamo.setLibro(libroSeleccionado);
+        }
+    }
+    
+    
+    public void seleccionarUsuario(){
+        if(usuarioSeleccionado != null){
+            nuevoPrestamo.setUsuario(usuarioSeleccionado);
+        }
+    }
+    
+    public List<Prestamo> getPrestamos() {
+        return prestamos;
+    }
 
-    
-    
-    
-    
-    
+    public void setPrestamos(List<Prestamo> prestamos) {
+        this.prestamos = prestamos;
+    }
+
+    public Prestamo getNuevoPrestamo() {
+        return nuevoPrestamo;
+    }
+
+    public void setNuevoPrestamo(Prestamo nuevoPrestamo) {
+        this.nuevoPrestamo = nuevoPrestamo;
+    }
+
+    public Prestamo getPrestamoEditar() {
+        return prestamoEditar;
+    }
+
+    public void setPrestamoEditar(Prestamo prestamoEditar) {
+        this.prestamoEditar = prestamoEditar;
+    }
+
+    public List<Libro> getLibros() {
+        return libros;
+    }
+
+    public void setLibros(List<Libro> libros) {
+        this.libros = libros;
+    }
+
+    public Libro getLibroSeleccionado() {
+        return libroSeleccionado;
+    }
+
+    public void setLibroSeleccionado(Libro libroSeleccionado) {
+        this.libroSeleccionado = libroSeleccionado;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    public Usuario getUsuarioSeleccionado() {
+        return usuarioSeleccionado;
+    }
+
+    public void setUsuarioSeleccionado(Usuario usuarioSeleccionado) {
+        this.usuarioSeleccionado = usuarioSeleccionado;
+    }    
     
 }
