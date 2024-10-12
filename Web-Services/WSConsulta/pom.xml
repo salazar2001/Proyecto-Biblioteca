@@ -143,6 +143,7 @@
             <id>archiva-repo</id>
             <url>http://192.168.191.153:8080/repository/biblioteca-repo</url>
         </repository>
-    </repositories>
+    </repositories> 
+    
 
 </project>

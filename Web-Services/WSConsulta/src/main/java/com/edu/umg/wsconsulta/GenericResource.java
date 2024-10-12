@@ -59,155 +59,83 @@ public class GenericResource {
     @Context
     private UriInfo context;
 
-    
     @GET
-    @Path("/Autor/{id}")
+    @Path("/libros")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAutor(@PathParam("id") int id){
-        Autor autor = autorController.getAutorById(id);
-        if (autor == null){
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        return Response.ok(autor).build();
+    public Response getAllLibros() {
+    List<Libro> libros = libroController.getAllLibros();
+    if (libros == null || libros.isEmpty()) {
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
-    
-  /*  @GET
-    @Path("/Tipos")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getTipo(@QueryParam("id") Integer id, @QueryParam("nombre") String nombre) {
-        Tipo result;
-        if (id != null) {
-            result = TiporCR.getTipoById(id);
-        } else if (nombre != null && !nombre.isEmpty()) {
-            result = TiporCR.getTipoByNombre(nombre);
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Debe proporcionar un ID o un nombre").build();
-        }
-
-        if (result != null) {
-            return Response.ok(result).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
-    
-    @GET
-    @Path("/Autores")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAutor(@QueryParam("id") Integer id, @QueryParam("nombre") String nombre) {
-        Autor result;
-        if (id != null) {
-            result = AutorCR.getAutorById(id);
-        } else if (nombre != null && !nombre.isEmpty()) {
-            result = AutorCR.getAutorByNombre(nombre);
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Debe proporcionar un ID o un nombre").build();
-        }
-
-        if (result != null) {
-            return Response.ok(result).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
-
-    @GET
-    @Path("/Usuarios")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsuario(@QueryParam("id") Integer id, @QueryParam("nombre") String nombre) {
-        Usuario result;
-        if (id != null) {
-            result = UsuarioCR.getUsuarioById(id);
-        } else if (nombre != null && !nombre.isEmpty()) {
-            result = UsuarioCR.getUsuarioByNombre(nombre);
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Debe proporcionar un ID o un nombre").build();
-        }
-
-        if (result != null) {
-            return Response.ok(result).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
-
-    @GET
-    @Path("/Libros")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getLibro(@QueryParam("id") Integer id, @QueryParam("nombre") String nombre) {
-        Libro result;
-        if (id != null) {
-            result = LibroCR.getLibroById(id);
-        } else if (nombre != null && !nombre.isEmpty()) {
-            result = LibroCR.getLibroByNombre(nombre);
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Debe proporcionar un ID o un nombre").build();
-        }
-
-        if (result != null) {
-            return Response.ok(result).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
-    
-    @GET
-    @Path("/Prestamos")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getPrestamo(@QueryParam("id") Integer id) {
-        if (id == null) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Debe proporcionar un ID").build();
-        }
-
-        Prestamo existingPrestamo = PrestamoCR.getPrestamoById(id);
-        if (existingPrestamo != null) {
-            return Response.ok(existingPrestamo).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
-    
-    @GET
-    @Path("/Personal")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getPersonal(@QueryParam("id") Integer id, @QueryParam("nombre") String nombre) {
-        Personal result;
-        if (id != null) {
-            result = PersonalCR.getPersonalById(id);
-        } else if (nombre != null && !nombre.isEmpty()) {
-            result = PersonalCR.getPersonalByNombre(nombre);
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Debe proporcionar un ID o un nombre").build();
-        }
-
-        if (result != null) {
-            return Response.ok(result).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
-
-    @GET
-    @Path("/Puestos")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getPuesto(@QueryParam("id") Integer id, @QueryParam("nombre") String nombre) {
-        Puesto result;
-        if (id != null) {
-            result = PuestoCR.getPuestoById(id);
-        } else if (nombre != null && !nombre.isEmpty()) {
-            result = PuestoCR.getPuestoByNombre(nombre);
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Debe proporcionar un ID o un nombre").build();
-        }
-
-        if (result != null) {
-            return Response.ok(result).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
+    return Response.ok(libros).build();
 }
-*/
 
-//localhost:8080/WSConsulta-BiblioProject/webresources/WSConsulta/pruebaConsulta
+    @GET
+    @Path("/personal")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllPersonal() {
+    List<Personal> personalList = personalController.getAllPersonal();  // Llama al método getAllPersonal()
+    if (personalList == null || personalList.isEmpty()) {
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
+    return Response.ok(personalList).build();  // Devuelve la lista en formato JSON
+}
+
+    @GET
+    @Path("/autores")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllAutores() {
+    List<Autor> autores = autorController.getAllAutores();  // Llama al método getAllAutores()
+    if (autores == null || autores.isEmpty()) {
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
+    return Response.ok(autores).build();  // Devuelve la lista de autores en formato JSON
+}
+
+    @GET
+    @Path("/prestamos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllPrestamos() {
+    List<Prestamo> prestamos = prestamosController.getAllPrestamos();  // Llama al método getAllPrestamos()
+    if (prestamos == null || prestamos.isEmpty()) {
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
+    return Response.ok(prestamos).build();  // Devuelve la lista de préstamos en formato JSON
+}
+
+    @GET
+    @Path("/puestos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllPuestos() {
+    List<Puesto> puestos = puestoController.getAllPuestos();  // Llama al método getAllPuestos()
+    if (puestos == null || puestos.isEmpty()) {
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
+    return Response.ok(puestos).build();  // Devuelve la lista de puestos en formato JSON
+}
+
+    @GET
+    @Path("/tipos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllTipos() {
+    List<Tipo> tipos = tiposController.getAllTipos();  // Llama al método getAllTipos()
+    if (tipos == null || tipos.isEmpty()) {
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
+    return Response.ok(tipos).build();  // Devuelve la lista de tipos en formato JSON
+}
+    
+
+    @GET
+    @Path("/usuarios")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllUsuarios() {
+    List<Usuario> usuarios = usuarioController.getAllUsuarios();  // Llama al método getAllUsuarios()
+    if (usuarios == null || usuarios.isEmpty()) {
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
+    return Response.ok(usuarios).build();  // Devuelve la lista de usuarios en formato JSON
+}
+
+   //localhost:8080/WSConsulta-BiblioProject/webresources/WSConsulta/pruebaConsulta
 }
