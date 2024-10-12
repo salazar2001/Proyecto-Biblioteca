@@ -14,12 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WSPuesto {
-    private static final String WS_URL = "http://localhost:8080/WSBiblioteca/webresources/puestos";
 
     // Obtener todos los puestos
     public List<Puesto> obtenerPuestos() throws Exception {
         List<Puesto> puestos = new ArrayList<>();
-        URL url = new URL(WS_URL);
+        URL url = new URL("http://192.168.191.135:8080/WSListar/ws/listar/puestos");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -53,7 +52,7 @@ public class WSPuesto {
 
     // Crear un nuevo puesto
     public void crearPuesto(Puesto puesto) throws Exception {
-        URL url = new URL(WS_URL);
+        URL url = new URL("http://192.168.191.112:8082/WSInsert/ws/Insertar/puestos/agregar");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -78,7 +77,7 @@ public class WSPuesto {
 
     // Actualizar un puesto existente
     public void actualizarPuesto(Puesto puesto) throws Exception {
-        URL url = new URL(WS_URL + "/" + puesto.getId_puesto());
+        URL url = new URL("http://192.168.191.240:8080/WSUpdatBiblioteca/ws/Updates/Puesto" + "/" + puesto.getId_puesto());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");
