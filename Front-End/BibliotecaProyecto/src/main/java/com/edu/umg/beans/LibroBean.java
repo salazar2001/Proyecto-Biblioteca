@@ -39,7 +39,7 @@ public class LibroBean implements Serializable {
         wsAutor = new WSAutor();          // Inicializa el cliente del Web Service de autores
         wsTipo = new WSTipo();
         
-                cargarLibros();                   // Inicializa la lista de libros
+        cargarLibros();                   // Inicializa la lista de libros
         cargarAutores();                  // Inicializa la lista de autores
         cargarTipos();
         
@@ -125,6 +125,12 @@ public class LibroBean implements Serializable {
         if (tipoSeleccionado != null) {
             libroEditar.setTipo(tipoSeleccionado); // Asigna el puesto seleccionado al personal editado
         }
+    }
+    
+    public void recargarPageLibros(){
+        cargarLibros();                   // Inicializa la lista de libros
+        cargarAutores();                  // Inicializa la lista de autores
+        cargarTipos();
     }
 
     // Getters y Setters

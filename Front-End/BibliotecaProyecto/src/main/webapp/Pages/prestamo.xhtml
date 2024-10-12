@@ -2,10 +2,281 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
+
+<h:head>
+    <title>Gestión de Prestamos</title>
+    <style>
+
+        h1 {
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Centrar la barra de búsqueda */
+        .search-panel {
+            display: flex;
+            justify-content: flex-start; /* Cambiar de center a flex-start para alinear a la izquierda */
+            margin-bottom: 20px;
+        }
+
+        /* Remover bordes extra en la barra de búsqueda */
+        .search-panel .ui-panelgrid {
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Alinear etiquetas e inputs a la izquierda */
+        .search-panel .ui-outputlabel {
+            text-align: left; /* Alinear etiquetas a la izquierda */
+            margin-right: 10px; /* Espacio entre la etiqueta y el input */
+        }
+
+        .search-panel .ui-inputtext {
+            display: inline-block; /* Alinear inputs en línea con las etiquetas */
+            margin-right: 10px; /* Espacio entre los inputs */
+        }
+        
+        .estado-entregado {
+            background-color: #c8e6c9; /* Color verde claro */
+            color: #2e7d32; /* Color verde más oscuro para el texto */
+            border-radius: 4px; /* Bordes redondeados */
+            padding: 5px 10px; /* Espaciado interno */
+            display: inline-block; /* Asegura que el fondo solo cubra el texto */
+        }
+
+        .estado-pendiente {
+            background-color: #ffcdd2; /* Color rojo claro */
+            color: #c62828; /* Color rojo más oscuro para el texto */
+            border-radius: 4px; /* Bordes redondeados */
+            padding: 5px 10px; /* Espaciado interno */
+            display: inline-block; /* Asegura que el fondo solo cubra el texto */
+        }
+        
+        .estado-disponible {
+            background-color: #c8e6c9; /* Color verde claro */
+            color: #2e7d32; /* Color verde más oscuro para el texto */
+            border-radius: 4px; /* Bordes redondeados */
+            padding: 5px 10px; /* Espaciado interno */
+            display: inline-block; /* Asegura que el fondo solo cubra el texto */
+        }
+
+        .estado-no-disponible {
+            background-color: #ffcdd2; /* Color rojo claro */
+            color: #c62828; /* Color rojo más oscuro para el texto */
+            border-radius: 4px; /* Bordes redondeados */
+            padding: 5px 10px; /* Espaciado interno */
+            display: inline-block; /* Asegura que el fondo solo cubra el texto */
+        }
+        
+        .estado-activo {
+            background-color: #c8e6c9; /* Color verde claro */
+            color: #2e7d32; /* Color verde más oscuro para el texto */
+            border-radius: 4px; /* Bordes redondeados */
+            padding: 5px 10px; /* Espaciado interno */
+            display: inline-block; /* Asegura que el fondo solo cubra el texto */
+        }
+
+        .estado-inactivo {
+            background-color: #ffcdd2; /* Color rojo claro */
+            color: #c62828; /* Color rojo más oscuro para el texto */
+            border-radius: 4px; /* Bordes redondeados */
+            padding: 5px 10px; /* Espaciado interno */
+            display: inline-block; /* Asegura que el fondo solo cubra el texto */
+        }
+    </style>
+</h:head>
     <h:body>
-        Hello from Facelets
-    </h:body>
+<h1 class="ui-widget-header" style="text-align: center; margin-bottom: 20px; color: #333;">Control de Prestamo</h1>
+
+<!-- Barra de búsqueda centrada -->
+<h:form id="formBuscarPersonal">
+    <div class="search-panel">
+        <p:panelGrid columns="5" layout="grid" styleClass="search-panel">
+            <p:commandButton value="Home"  icon="pi pi-home" action="#{navigationBean.irHome()}" />
+
+            <!-- Botón para mostrar el formulario de agregar personal en la misma línea -->
+            <p:commandButton value="Agregar Prestamo" icon="pi pi-plus" 
+                             oncomplete="PF('dlgAgregarPrestamo').show();"
+                             update=":formAgregarPrestamo"/>
+            
+        </p:panelGrid>
+    </div>
+</h:form>
+<!-- Diálogo emergente para editar prestamo -->
+<p:dialog header="Editar Prestamo" widgetVar="dlgEditarPrestamo" modal="true" 
+          showEffect="fade" hideEffect="fade" resizable="false">
+    <h:form id="formEditarPrestamo">
+        <p:panelGrid columns="2" style="margin-bottom: 20px;">
+
+            <p:outputLabel for="estadoEditar" value="Estado:" />
+            <p:selectOneMenu id="estadoEditar" value="#{prestamoBean.prestamoEditar.estado}" required="true" label="Estado">
+                <f:selectItem itemLabel="Entregado" itemValue="Entregado" />
+                <f:selectItem itemLabel="Pendiente" itemValue="Pendiente" />
+            </p:selectOneMenu>
+        </p:panelGrid>
+
+        <p:commandButton value="Guardar" action="#{prestamoBean.actualizarPrestamo}" 
+                         update=":formPrestamo:prestamoTable :formSeleccionarLibro:libroTable" 
+                         oncomplete="PF('dlgEditarPrestamo').hide();" />
+        <p:commandButton value="Cancelar" type="button" 
+                         onclick="PF('dlgEditarPrestamo').hide();"
+                         style="margin-left:10px;"/>
+    </h:form>
+</p:dialog>
+
+<!-- Diálogo emergente para agregar prestamo -->
+<p:dialog header="Agregar Prestamo" widgetVar="dlgAgregarPrestamo" modal="true" 
+          showEffect="fade" hideEffect="fade" resizable="false" >
+    <h:form id="formAgregarPrestamo">
+        
+        <p:panelGrid columns="2" style="margin-bottom: 20px;">
+
+            <p:outputLabel for="Libro" value="Libro:" />
+            <p:inputText id="Libro" value="#{prestamoBean.libroSeleccionado.titulo}" disabled="true" />
+            
+            <p:outputLabel for="Usuario" value="Usuario:" />
+            <p:inputText id="Usuario" value="#{prestamoBean.usuarioSeleccionado.nombre}" disabled="true" />
+        </p:panelGrid>
+         <!-- Botón para seleccionar el puesto -->
+        <p:commandButton value="Selec Libro" oncomplete="PF('dlgSeleccionarLibro').show();" 
+                         update=":formSeleccionarLibro" styleClass="ui-button-flat" />
+        
+        <p:commandButton value="Selec Usuario" oncomplete="PF('dlgSeleccionarUsuario').show();" 
+                         update=":formSeleccionarUsuario" styleClass="ui-button-flat" />
+    
+        <p:commandButton value="Guardar" action="#{prestamoBean.agregarPrestamo}" 
+                         update=":formAgregarPrestamo:messages, :formPrestamo:prestamoTable,
+                         formSeleccionarLibro:libroTable" 
+                         oncomplete="PF('dlgAgregarPrestamo').hide();" 
+                         style="margin-left: 10px;"/>
+
+        <p:commandButton value="Cancelar" type="button" onclick="PF('dlgAgregarPrestamo').hide();" style="margin-left:10px;" />
+
+        <p:messages id="messages" showDetail="true" />
+    </h:form>
+</p:dialog>
+
+<!-- Diálogo emergente para seleccionar libro -->
+<p:dialog header="Seleccionar Libro" widgetVar="dlgSeleccionarLibro" modal="true" 
+          showEffect="fade" hideEffect="fade" resizable="false" style="width: 50%;">
+    <h:form id="formSeleccionarLibro">
+        <p:dataTable id="libroTable" value="#{prestamoBean.libros}" var="libro" selectionMode="single" 
+                     selection="#{prestamoBean.libroSeleccionado}" rowKey="#{libro.id_libro}" 
+                     style="max-height: 300px; max-width: 700px; overflow-y: auto;" lazy="false">
+            <p:column headerText="Nombre">
+                <h:outputText value="#{libro.titulo}" />
+            </p:column>
+            <p:column headerText="ISBN">
+                <h:outputText value="#{libro.isbn}" />
+            </p:column>
+            <p:column headerText="Autor">
+                <h:outputText value="#{libro.autor.nombre}" />
+            </p:column>
+            <p:column headerText="Estado">
+                <h:outputText value="#{libro.estado.toUpperCase()}"
+                              styleClass="estado-#{libro.estado.toLowerCase()} "/>
+            </p:column>
+            
+            <!-- Actualizamos el formulario cuando se selecciona un libro -->
+            <p:ajax event="rowSelect" listener="#{prestamoBean.seleccionarLibro}" 
+                    update="formSeleccionarLibro" process="@this" />
+        </p:dataTable>
+
+        <!-- Botón de seleccionar, deshabilitado si el libro seleccionado tiene estado 'NO-DISPONIBLE' -->
+        <p:commandButton value="Seleccionar" actionListener="#{prestamoBean.seleccionarLibro}" 
+                         update=":formAgregarPrestamo" oncomplete="PF('dlgSeleccionarLibro').hide();" 
+                         style="margin-top: 10px;" 
+                         disabled="#{prestamoBean.libroSeleccionado.estado.toUpperCase() eq 'NO-DISPONIBLE'}"/>
+
+        <p:commandButton value="Cancelar" type="button" onclick="PF('dlgSeleccionarLibro').hide();" 
+                         style="margin-top: 10px; margin-left: 10px;" /> 
+    </h:form>
+</p:dialog>
+
+
+<!-- Diálogo emergente para seleccionar Usuario -->
+<p:dialog header="Seleccionar Usuario" widgetVar="dlgSeleccionarUsuario" modal="true" 
+          showEffect="fade" hideEffect="fade" resizable="false" style="width: 50%;">
+    <h:form id="formSeleccionarUsuario">
+        <!-- Mensajes de error o éxito -->
+        <p:messages id="mensajes" />
+
+        <p:dataTable id="usuarioTable" value="#{prestamoBean.usuarios}" var="usuario" 
+                     selectionMode="single" selection="#{prestamoBean.usuarioSeleccionado}" 
+                     rowKey="#{usuario.id_usuario}" style="max-height: 300px; max-width: 600px; overflow-y: auto;" 
+                     lazy="false">
+            
+            <p:column headerText="ID">
+                <h:outputText value="#{usuario.id_usuario}" />
+            </p:column>
+            <p:column headerText="Nombre">
+                <h:outputText value="#{usuario.nombre}" />
+            </p:column>
+            <p:column headerText="Apellido">
+                <h:outputText value="#{usuario.apellido}" />
+            </p:column>
+            <p:column headerText="Estado">
+                <h:outputText value="#{usuario.estado.toUpperCase()}"
+                              styleClass="estado-#{usuario.estado.toLowerCase()} "/>
+            </p:column>
+            
+            <!-- Actualizamos el formulario cuando se selecciona un usuario -->
+            <p:ajax event="rowSelect" listener="#{prestamoBean.seleccionarLibro()}" 
+                    update="formSeleccionarUsuario" process="@this" />
+        </p:dataTable>
+
+        <!-- Botón de seleccionar, deshabilitado si el usuario seleccionado está inactivo -->
+        <p:commandButton value="Seleccionar" actionListener="#{prestamoBean.seleccionarUsuario}" 
+                         update=":formAgregarPrestamo" oncomplete="PF('dlgSeleccionarUsuario').hide();" 
+                         style="margin-top: 10px;" disabled="#{prestamoBean.usuarioSeleccionado.estado.toUpperCase() eq 'INACTIVO'}"/>
+
+        <p:commandButton value="Cancelar" type="button" onclick="PF('dlgSeleccionarUsuario').hide();" 
+                         style="margin-top: 10px; margin-left: 10px;" /> 
+    </h:form>
+</p:dialog>
+
+
+
+<!-- Tabla de libros -->
+<h:form id="formPrestamo">
+    <p:panel header="Lista de Prestamos">      
+        <p:dataTable id="prestamoTable" value="#{prestamoBean.prestamos}" var="prestamo" 
+                     paginator="true" rows="10" style="width:100%" widgetVar="libroTable" lazy="false">
+            
+            <p:column headerText="ID Prestamo" sortBy="#{prestamo.id_prestamo}" filterBy="#{prestamo.id_prestamo}">
+                <h:outputText value="#{prestamo.id_prestamo}" />
+            </p:column>
+            <p:column headerText="ID Usuario" sortBy="#{prestamo.usuario.id_usuario}" filterBy="#{prestamo.usuario.id_usuario}">
+                <h:outputText value="#{prestamo.usuario.id_usuario}" />
+            </p:column>
+            <p:column headerText="Usuario">
+                <h:outputText value="#{prestamo.usuario.nombre}" />
+            </p:column>
+            <p:column headerText="Libro" sortBy="#{prestamo.libro.titulo}" filterBy="#{prestamo.libro.titulo}">
+                <h:outputText value="#{prestamo.libro.titulo}" />
+            </p:column>
+            <p:column headerText="ISBN">
+                <h:outputText value="#{prestamo.libro.isbn}" />
+            </p:column>
+            <p:column headerText="Fecha Prestamo" sortBy="#{prestamo.fecha_prestamo}" filterBy="#{prestamo.fecha_prestamo}">
+                <h:outputText value="#{prestamo.fecha_prestamo}" converter="dateConverter" />
+            </p:column>
+            <p:column headerText="Fecha Devolucion" sortBy="#{prestamo.fecha_devolucion}" filterBy="#{prestamo.fecha_devolucion}">
+                <h:outputText value="#{prestamo.fecha_devolucion}" converter="dateConverter" />
+            </p:column>
+            <p:column headerText="Estado" sortBy="#{prestamo.estado}" filterBy="#{prestamo.estado}">
+                <h:outputText styleClass="estado-#{prestamo.estado.toLowerCase()} " value="#{prestamo.estado.toUpperCase()}" />
+            </p:column>            
+            <p:column headerText="Acciones">
+                <p:commandButton value="Editar" icon="pi pi-user-edit" 
+                                 action="#{prestamoBean.prepararEdicion(prestamo)}"
+                                 oncomplete="PF('dlgEditarPrestamo').show();" 
+                                 update=":formEditarPrestamo
+                                 :formSeleccionarLibro:libroTable" />
+            </p:column>
+           
+        </p:dataTable>
+    </p:panel>
+</h:form>
+
+</h:body>
 </html>
