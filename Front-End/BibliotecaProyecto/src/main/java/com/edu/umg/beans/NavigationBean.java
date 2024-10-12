@@ -15,14 +15,5 @@ public class NavigationBean {
 
     public String irHome() {
         return "home?faces-redirect=true";
-    }
-        
-    public String goToUsuarios() {
-        return "usuario?faces-redirect=true";
-    }
-
-    public String goToAutores() {
-        return "autor?faces-redirect=true";
-    }
-    
+    }   
 }
