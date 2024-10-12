@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/WebServices/GenericResource.java to edit this template
  */
-package com.edu.umg.wsconsulta.biblioproject;
+package com.edu.umg.wsconsulta;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -11,8 +11,29 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.edu.umg.controller.AutorController;
+import com.edu.umg.controller.LibroController;
+import com.edu.umg.controller.PersonalController;
+import com.edu.umg.controller.PrestamoController;
+import com.edu.umg.controller.PuestoController;
+import com.edu.umg.controller.TipoController;
+import com.edu.umg.controller.UsuarioController;
+import com.edu.umg.model.Autor;
+import com.edu.umg.model.Libro;
+import com.edu.umg.model.Personal;
+import com.edu.umg.model.Prestamo;
+import com.edu.umg.model.Puesto;
+import com.edu.umg.model.Tipo;
+import com.edu.umg.model.Usuario;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.util.List;
 /**
  * REST Web Service
  *
@@ -26,11 +47,31 @@ public class GenericResource {
      */
     public GenericResource() {
     }
+    private AutorController autorController = new AutorController();
+    private LibroController libroController = new LibroController();
+    private UsuarioController usuarioController = new UsuarioController();
+    private PrestamoController prestamosController = new PrestamoController();
+    private TipoController tiposController = new TipoController();
+    private PuestoController puestoController = new PuestoController();
+    private PersonalController personalController = new PersonalController();
+
 
     @Context
     private UriInfo context;
 
+    
     @GET
+    @Path("/Autor/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAutor(@PathParam("id") int id){
+        Autor autor = autorController.getAutorById(id);
+        if (autor == null){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(autor).build();
+    }
+    
+  /*  @GET
     @Path("/Tipos")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTipo(@QueryParam("id") Integer id, @QueryParam("nombre") String nombre) {
@@ -166,7 +207,7 @@ public class GenericResource {
         }
     }
 }
-
+*/
 
 //localhost:8080/WSConsulta-BiblioProject/webresources/WSConsulta/pruebaConsulta
 }

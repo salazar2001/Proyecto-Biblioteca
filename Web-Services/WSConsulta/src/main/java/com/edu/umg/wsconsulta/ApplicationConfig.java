@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.edu.umg.wsconsulta.biblioproject;
+package com.edu.umg.wsconsulta;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
@@ -28,7 +28,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(com.edu.umg.wsconsulta.biblioproject.GenericResource.class);
+        resources.add(com.edu.umg.wsconsulta.GenericResource.class);
     }
     
 }
