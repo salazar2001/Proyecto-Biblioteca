@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 public class WSPersonal {
-    private static final String WS_URL = "http://localhost:8080/WSBiblioteca/webresources/personal";
+    private static final String WS_URL = "http://192.168.191.142:8080/WSBiblioteca/webresources/personal";
 
     // Obtener todos los personales
     public List<Personal> obtenerPersonal() throws Exception {

@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 public class WSPrestamo {
-    private static final String WS_URL = "http://localhost:8080/WSBiblioteca/webresources/prestamos";
+    private static final String WS_URL = "http://192.168.191.142:8080/WSBiblioteca/webresources/prestamos";
 
     // Obtener todos los préstamos
     public List<Prestamo> obtenerPrestamos() throws Exception {

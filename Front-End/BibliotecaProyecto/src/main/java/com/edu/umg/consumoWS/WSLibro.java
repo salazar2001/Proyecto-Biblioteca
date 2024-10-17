@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 public class WSLibro {
-    private static final String WS_URL = "http://localhost:8080/WSBiblioteca/webresources/libros";
+    private static final String WS_URL = "http://192.168.191.142:8080/WSBiblioteca/webresources/libros";
 
     // Obtener todos los libros
     public List<Libro> obtenerLibros() throws Exception {
