@@ -15,12 +15,19 @@ import java.util.Date;
 import java.util.List;
 
 public class WSAutor {
+<<<<<<< HEAD
     private static final String WS_URL = "http://192.168.191.142:8080/WSBiblioteca/webresources/autores";
+=======
+>>>>>>> 514f3bfb98a9a3cb30f28c69034a725331260bb1
 
     // Obtener todos los autores
     public List<Autor> obtenerAutores() throws Exception {
         List<Autor> autores = new ArrayList<>();
+<<<<<<< HEAD
         URL url = new URL(WS_URL);
+=======
+        URL url = new URL("http://192.168.191.135:8080/WSListar/ws/listar/autores"); //Cambiar Ruta de End Point
+>>>>>>> 514f3bfb98a9a3cb30f28c69034a725331260bb1
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -57,7 +64,11 @@ public class WSAutor {
 
     // Crear un nuevo autor
     public void crearAutor(Autor autor) throws Exception {
+<<<<<<< HEAD
         URL url = new URL(WS_URL);
+=======
+        URL url = new URL("http://192.168.191.112:8082/WSInsert/ws/Insertar/autores/agregar"); //Cambiar Ruta de End Point
+>>>>>>> 514f3bfb98a9a3cb30f28c69034a725331260bb1
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -87,7 +98,11 @@ public class WSAutor {
     
     // Actualizar un autor existente
     public void actualizarAutor(Autor autor) throws Exception {
+<<<<<<< HEAD
         URL url = new URL(WS_URL + "/" + autor.getId_autor());
+=======
+        URL url = new URL("http://192.168.191.240:8080/WSUpdatBiblioteca/ws/Updates/Autores" + "/" + autor.getId_autor());  //Cambiar Ruta de End Point
+>>>>>>> 514f3bfb98a9a3cb30f28c69034a725331260bb1
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");
