@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 public class WSUsuario {
-    private static final String WS_URL = "http://localhost:8080/WSBiblioteca/webresources/usuarios";
+    private static final String WS_URL = "http://192.168.191.142:8080/WSBiblioteca/webresources/usuarios";
 
     // Obtener todos los usuarios
     public List<Usuario> obtenerUsuarios() throws Exception {

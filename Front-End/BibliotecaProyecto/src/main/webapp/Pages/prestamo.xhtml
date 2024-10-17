@@ -4,6 +4,7 @@
       xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Gestión de Prestamos</title>
     <style>
 
@@ -138,10 +139,12 @@
         </p:panelGrid>
          <!-- Botón para seleccionar el puesto -->
         <p:commandButton value="Selec Libro" oncomplete="PF('dlgSeleccionarLibro').show();" 
-                         update=":formSeleccionarLibro" styleClass="ui-button-flat" />
+                         update=":formSeleccionarLibro" styleClass="ui-button-flat"
+                         action="#{prestamoBean.actLibros()}"/>
         
         <p:commandButton value="Selec Usuario" oncomplete="PF('dlgSeleccionarUsuario').show();" 
-                         update=":formSeleccionarUsuario" styleClass="ui-button-flat" />
+                         update=":formSeleccionarUsuario" styleClass="ui-button-flat"
+                         action="#{prestamoBean.actusuario()}"/>
     
         <p:commandButton value="Guardar" action="#{prestamoBean.agregarPrestamo}" 
                          update=":formAgregarPrestamo:messages, :formPrestamo:prestamoTable,

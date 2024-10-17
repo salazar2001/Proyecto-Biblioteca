@@ -12,16 +12,14 @@ import com.edu.umg.entity.Prestamo;
 import com.edu.umg.entity.Usuario;
 import java.io.Serializable;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 @ManagedBean(name = "prestamoBean")
-@SessionScoped
+@ViewScoped
 public class PrestamoBean implements Serializable {
     
     private List<Prestamo> prestamos;
@@ -46,8 +44,6 @@ public class PrestamoBean implements Serializable {
         wsUsuario = new WSUsuario();
 
         cargarPrestamo();
-        cargarLibros();
-        cargarUsuarios();
         
         prestamoEditar = new Prestamo();
         nuevoPrestamo = new Prestamo();         // Inicializa el objeto nuevoLibro       
@@ -138,8 +134,6 @@ public class PrestamoBean implements Serializable {
             
             prestamoEditar = new Prestamo();
             cargarPrestamo();
-            cargarLibros();
-            cargarUsuarios();
 
             // Mensaje de éxito
             FacesContext.getCurrentInstance().addMessage(null, 
@@ -150,6 +144,15 @@ public class PrestamoBean implements Serializable {
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, 
                 "Error", "No se pudo actualizar el préstamo: " + e.getMessage()));
         }
+    }
+
+        
+    public void actLibros(){
+        cargarLibros();
+    }
+    
+        public void actusuario(){
+        cargarUsuarios();
     }
     
     

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WSPuesto {
-    private static final String WS_URL = "http://localhost:8080/WSBiblioteca/webresources/puestos";
+    private static final String WS_URL = "http://192.168.191.142:8080/WSBiblioteca/webresources/puestos";
 
     // Obtener todos los puestos
     public List<Puesto> obtenerPuestos() throws Exception {
