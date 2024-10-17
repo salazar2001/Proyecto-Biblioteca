@@ -14,15 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WSTipo {
-<<<<<<< HEAD
-    private static final String WS_URL = "http://192.168.191.142:8080/WSBiblioteca/webresources/tipos";
-=======
->>>>>>> 514f3bfb98a9a3cb30f28c69034a725331260bb1
+    
+        //Agregar aca los Endpoints de cada WS
+    private static final String WSLISTAR_URL=" ";
+    private static final String WSINSERTAR_URL=" ";
+    private static final String WSUPDATE_URL=" ";
+    
 
     // Obtener todos los tipos
     public List<Tipo> obtenerTipos() throws Exception {
         List<Tipo> tipos = new ArrayList<>();
-        URL url = new URL("http://192.168.191.135:8080/WSListar/ws/listar/tipos");
+        URL url = new URL(WSLISTAR_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -56,7 +58,7 @@ public class WSTipo {
 
     // Crear un nuevo tipo
     public void crearTipo(Tipo tipo) throws Exception {
-        URL url = new URL("http://192.168.191.112:8080/WSInsert/ws/Insertar/tipos/agregar");
+        URL url = new URL(WSINSERTAR_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -81,7 +83,7 @@ public class WSTipo {
 
     // Actualizar un tipo existente
     public void actualizarTipo(Tipo tipo) throws Exception {
-        URL url = new URL("http://192.168.191.240:8080/WSUpdatBiblioteca/ws/Updates/Tipos" + "/" + tipo.getId_tipo());
+        URL url = new URL(WSUPDATE_URL + "/" + tipo.getId_tipo());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");
