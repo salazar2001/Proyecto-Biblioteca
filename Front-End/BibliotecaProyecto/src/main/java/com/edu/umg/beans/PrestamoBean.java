@@ -18,10 +18,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 @ManagedBean(name = "prestamoBean")
-@SessionScoped
+@ViewScoped 
 public class PrestamoBean implements Serializable {
     
     private List<Prestamo> prestamos;

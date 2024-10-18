@@ -13,9 +13,10 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name = "libroBean")
-@SessionScoped
+@ViewScoped 
 public class LibroBean implements Serializable {
 
     private List<Libro> libros;           // Lista de libros para mostrar en la tabla

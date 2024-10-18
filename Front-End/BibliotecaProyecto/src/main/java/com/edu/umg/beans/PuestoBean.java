@@ -11,7 +11,7 @@ import javax.faces.bean.ViewScoped;
 import java.util.List;
 
 @ManagedBean
-@ViewScoped
+@ViewScoped 
 public class PuestoBean {
     private WSPuesto wsPuesto = new WSPuesto();
     private List<Puesto> listaPuestos;

@@ -5,14 +5,14 @@ import com.edu.umg.entity.Usuario;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name = "usuarioBean")
-@SessionScoped
+@ViewScoped 
 public class UsuarioBean implements Serializable {
 
     private List<Usuario> usuarios;       // Lista de usuarios para mostrar en la tabla
