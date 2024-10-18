@@ -19,6 +19,7 @@ public class WSUsuario {
     private static final String WSLISTAR_URL=" ";
     private static final String WSINSERTAR_URL=" ";
     private static final String WSUPDATE_URL=" ";
+    
     // Obtener todos los usuarios
     public List<Usuario> obtenerUsuarios() throws Exception {
         List<Usuario> usuarios = new ArrayList<>();
