@@ -5,15 +5,15 @@ import com.edu.umg.entity.Usuario;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name = "usuarioBean")
-@SessionScoped
-public class UsuarioBean implements Serializable {
+@ViewScoped
+public class UsuarioBean {
 
     private List<Usuario> usuarios;       // Lista de usuarios para mostrar en la tabla
     private Usuario nuevoUsuario;          // Usuario nuevo para agregar
@@ -51,6 +51,10 @@ public class UsuarioBean implements Serializable {
             wsUsuario.crearUsuario(nuevoUsuario); // Llamada al servicio web para agregar el usuario
             nuevoUsuario = new Usuario();          // Limpia el formulario después de agregar
             cargarUsuarios();                      // Refresca la lista de usuarios
+            // Mensaje de éxito
+            FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_INFO, 
+            "Éxito", "Usuario agregado correctamente."));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, 
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, 
@@ -69,6 +73,11 @@ public class UsuarioBean implements Serializable {
             wsUsuario.actualizarUsuario(usuarioEditar); // Llamada al servicio web para actualizar el usuario
             cargarUsuarios(); // Refresca la lista de usuarios después de la actualización
             usuarioEditar = new Usuario(); // Limpia el objeto usuarioEditar
+            
+                        // Mensaje de éxito
+            FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_INFO, 
+            "Éxito", "Usuario actualizado correctamente."));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -79,6 +88,10 @@ public class UsuarioBean implements Serializable {
     // Llamar a este método en onHide para limpiar el diálogo cuando se cierre
     public void limpiarEdicion() {
         usuarioEditar = new Usuario();
+    }
+    
+    public void actualizar(){
+        cargarUsuarios();
     }
 
     // Getters y Setters

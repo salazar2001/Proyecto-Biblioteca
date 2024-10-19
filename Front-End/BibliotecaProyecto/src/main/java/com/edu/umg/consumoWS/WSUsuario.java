@@ -15,11 +15,15 @@ import java.util.Date;
 import java.util.List;
 
 public class WSUsuario {
-
+        //Agregar aca los Endpoints de cada WS
+    private static final String WSLISTAR_URL=" ";
+    private static final String WSINSERTAR_URL=" ";
+    private static final String WSUPDATE_URL=" ";
+    
     // Obtener todos los usuarios
     public List<Usuario> obtenerUsuarios() throws Exception {
         List<Usuario> usuarios = new ArrayList<>();
-        URL url = new URL("http://192.168.191.135:8080/WSListar/ws/listar/usuarios");
+        URL url = new URL(WSLISTAR_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -56,10 +60,11 @@ public class WSUsuario {
 
         return usuarios;
     }
-    
+ 
+
     // Crear un nuevo usuario
     public void crearUsuario(Usuario usuario) throws Exception {
-        URL url = new URL("http://192.168.191.112:8080/WSInsert/ws/Insertar/usuarios/agregar");
+        URL url = new URL(WSINSERTAR_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -92,7 +97,7 @@ public class WSUsuario {
 
     // Actualizar un usuario existente
     public void actualizarUsuario(Usuario usuario) throws Exception {
-        URL url = new URL("http://192.168.191.240:8080/WSUpdatBiblioteca/ws/Updates/Usuarios" + "/" + usuario.getId_usuario());
+        URL url = new URL(WSUPDATE_URL + "/" + usuario.getId_usuario());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -120,6 +125,5 @@ public class WSUsuario {
 
         conn.disconnect();
     }
-
 
 }

@@ -6,8 +6,6 @@ package com.edu.umg.beans;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import java.io.IOException;
 
 @ManagedBean
 @RequestScoped
