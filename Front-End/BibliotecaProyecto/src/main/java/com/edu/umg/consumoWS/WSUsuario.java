@@ -15,11 +15,22 @@ import java.util.Date;
 import java.util.List;
 
 public class WSUsuario {
-
+        //Agregar aca los Endpoints de cada WS
+    private static final 
+            String WSLISTAR_URL="http://192.168.0.100:8083/WSListar-1.0-SNAPSHOT/ws/listar/usuarios";
+    private static final 
+            String WSINSERTAR_URL="http://192.168.0.110:8082/WSInsertar-1.0-SNAPSHOT/ws/insertar/usuario";
+    private static final 
+            String WSUPDATE_URL="http://192.168.0.104:8084/WSUpdate-1.0-SNAPSHOT/ws/actualizar/usuario";
+    
     // Obtener todos los usuarios
     public List<Usuario> obtenerUsuarios() throws Exception {
         List<Usuario> usuarios = new ArrayList<>();
+<<<<<<< HEAD
         URL url = new URL("http://192.168.0.103:8080/WSListar/ws/listar/usuarios");
+=======
+        URL url = new URL(WSLISTAR_URL);
+>>>>>>> b4f924053c3b59ec7d7af87494f01e99e53b4c57
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -56,10 +67,15 @@ public class WSUsuario {
 
         return usuarios;
     }
-    
+ 
+
     // Crear un nuevo usuario
     public void crearUsuario(Usuario usuario) throws Exception {
+<<<<<<< HEAD
         URL url = new URL("http://192.168.0.100:8080/WSInsert/ws/Insertar/usuarios/agregar");
+=======
+        URL url = new URL(WSINSERTAR_URL);
+>>>>>>> b4f924053c3b59ec7d7af87494f01e99e53b4c57
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -92,7 +108,11 @@ public class WSUsuario {
 
     // Actualizar un usuario existente
     public void actualizarUsuario(Usuario usuario) throws Exception {
+<<<<<<< HEAD
         URL url = new URL("http://192.168.0.101:8080/WSUpdatBiblioteca/ws/Updates/Usuarios" + "/" + usuario.getId_usuario());
+=======
+        URL url = new URL(WSUPDATE_URL + "/" + usuario.getId_usuario());
+>>>>>>> b4f924053c3b59ec7d7af87494f01e99e53b4c57
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -120,6 +140,5 @@ public class WSUsuario {
 
         conn.disconnect();
     }
-
 
 }

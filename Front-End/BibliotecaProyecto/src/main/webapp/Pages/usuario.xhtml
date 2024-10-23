@@ -4,12 +4,9 @@
       xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Gestión de Usuarios</title>
     <style>
-        h1 {
-            font-family: 'Arial', sans-serif;
-        }
-
         /* Centrar la barra de búsqueda */
         .search-panel {
             display: flex;
@@ -54,17 +51,24 @@
 </h:head>
 
 <h:body>
-<h1 class="ui-widget-header" style="text-align: center; margin-bottom: 20px; color: #333;">Control de Usuarios</h1>
+
+<p:growl id="messages" showDetail="true" showSummary="false" />
+
+<h1 class="ui-widget-header" style="text-align: center; margin-bottom: 20px; 
+    color: #333;">Control de Usuarios</h1>
 
 <!-- Barra de búsqueda centrada -->
 <h:form id="formBuscarUsuario">
     <div class="search-panel">
         <p:panelGrid columns="5" layout="grid" styleClass="search-panel" >
             
-            <p:commandButton value="Home" action="#{navigationBean.irHome()}"   icon="pi pi-home" />
+            <p:commandButton value="Home" action="#{navigationBean.irHome()}"   
+                             icon="pi pi-home" />
 
             <!-- Botón para mostrar el formulario de agregar usuario -->
-            <p:commandButton value="Agregar" icon="pi pi-plus" oncomplete="PF('dlgAgregarUsuario').show();" />
+            <p:commandButton value="Agregar" icon="pi pi-plus" 
+                             oncomplete="PF('dlgAgregarUsuario').show();" />
+            
         </p:panelGrid>
     </div>
 </h:form>
@@ -75,23 +79,29 @@
     <h:form id="formAgregarUsuario">      
         <p:panelGrid columns="2" style="margin-bottom: 20px;">
             <p:outputLabel for="nombre" value="Nombre:" />
-            <p:inputText id="nombre" value="#{usuarioBean.nuevoUsuario.nombre}" required="true" label="Nombre" />
+            <p:inputText id="nombre" value="#{usuarioBean.nuevoUsuario.nombre}" 
+                         required="true" label="Nombre" />
 
             <p:outputLabel for="apellido" value="Apellido:" />
-            <p:inputText id="apellido" value="#{usuarioBean.nuevoUsuario.apellido}" required="true" label="Apellido" />
+            <p:inputText id="apellido" value="#{usuarioBean.nuevoUsuario.apellido}" 
+                         required="true" label="Apellido" />
 
             <p:outputLabel for="correo" value="Correo:" />
-            <p:inputText id="correo" value="#{usuarioBean.nuevoUsuario.correo}" required="true" label="Correo" />
+            <p:inputText id="correo" value="#{usuarioBean.nuevoUsuario.correo}" 
+                         required="true" label="Correo" />
 
             <p:outputLabel for="telefono" value="Teléfono:" />
-            <p:inputText id="telefono" value="#{usuarioBean.nuevoUsuario.telefono}" required="true" label="Teléfono" />
+            <p:inputText id="telefono" value="#{usuarioBean.nuevoUsuario.telefono}" 
+                         required="true" label="Teléfono" />
 
             <p:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento:" />
-            <p:inputText id="fechaNacimiento" value="#{usuarioBean.nuevoUsuario.fecha_nacimiento}" required="true" converter="dateConverter" />
+            <p:inputText id="fechaNacimiento" 
+                         value="#{usuarioBean.nuevoUsuario.fecha_nacimiento}" 
+                         required="true" converter="dateConverter" />
         </p:panelGrid>
 
         <p:commandButton value="Guardar" action="#{usuarioBean.agregarUsuario}" 
-                         update=":formAgregarUsuario:messages, :formUsuarios:usuarioTable" 
+                         update=":messages, :formUsuarios:usuarioTable" 
                          oncomplete="PF('dlgAgregarUsuario').hide();"
                          style="margin-left: 110px;"/>
 
@@ -100,15 +110,14 @@
                          onclick="PF('dlgAgregarUsuario').hide();" 
                          style="margin-left:10px;" />
 
-        <p:messages id="messages" showDetail="true" />
     </h:form>
 </p:dialog>
 
 <!-- Diálogo emergente para editar usuario -->
 <p:dialog header="Editar Usuario" widgetVar="dlgEditarUsuario" modal="true" 
-          showEffect="fade" hideEffect="fade" responsive="true" styleClass="ui-dialog-lg" resizable="false">
+          showEffect="fade" hideEffect="fade" responsive="true" 
+          styleClass="ui-dialog-lg" resizable="false">
     <h:form id="formEditarUsuario">  
-        <p:messages id="messages" showDetail="true" />
         
         <!-- Información del usuario -->
         <h:outputText value="#{usuarioBean.usuarioEditar.nombre} #{usuarioBean.usuarioEditar.apellido}" 
@@ -132,7 +141,7 @@
 
             <p:commandButton value="Actualizar" action="#{usuarioBean.actualizarUsuario}" 
                              style="margin-left: 70px;"
-                             update=":formUsuarios:usuarioTable" 
+                             update=":formUsuarios:usuarioTable, :messages" 
                               oncomplete="PF('dlgEditarUsuario').hide();" />
             <p:commandButton value="Cancelar" type="button" onclick="PF('dlgEditarUsuario').hide();" 
                               style="margin-left: 10px;" />
@@ -142,17 +151,17 @@
 
 <!-- Tabla de usuarios -->
 <h:form id="formUsuarios">
-    <p:panel header="Lista de Usuarios">      
+    <p:panel header="Lista de Usuarios">  
         <p:dataTable id="usuarioTable" value="#{usuarioBean.usuarios}" var="usuario" 
                      paginator="true" rows="10" style="width:100%" widgetVar="usuarioTable">
             
-            <p:column headerText="ID" sortBy="#{usuario.id_usuario}" filterBy="#{usuario.id_usuario}">
+            <p:column headerText="ID">
                 <h:outputText value="#{usuario.id_usuario}" />
             </p:column>
-            <p:column headerText="Nombre" sortBy="#{usuario.nombre}" filterBy="#{usuario.nombre}">
+            <p:column headerText="Nombre">
                 <h:outputText value="#{usuario.nombre}" />
             </p:column>
-            <p:column headerText="Apellido" sortBy="#{usuario.apellido}" filterBy="#{usuario.apellido}">
+            <p:column headerText="Apellido">
                 <h:outputText value="#{usuario.apellido}" />
             </p:column>
             <p:column headerText="Correo">
@@ -161,13 +170,13 @@
             <p:column headerText="Teléfono">
                 <h:outputText value="#{usuario.telefono}" />
             </p:column>
-            <p:column headerText="Fecha de Nacimiento" sortBy="#{usuario.fecha_nacimiento}" filterBy="#{usuario.fecha_nacimiento}">
+            <p:column headerText="Fecha de Nacimiento" >
                 <h:outputText value="#{usuario.fecha_nacimiento}" converter="dateConverter" />
             </p:column>
-            <p:column headerText="Fecha Registro" sortBy="#{usuario.fecha_registro}" filterBy="#{usuario.fecha_registro}">
+            <p:column headerText="Fecha Registro">
                 <h:outputText value="#{usuario.fecha_registro}" converter="dateConverter" />
             </p:column>
-            <p:column headerText="Estado" sortBy="#{usuario.estado}" filterBy="#{usuario.estado}">
+            <p:column headerText="Estado">
                 <h:outputText styleClass="estado-#{usuario.estado.toLowerCase()}" value="#{usuario.estado.toUpperCase()}" />
             </p:column>
             
@@ -179,6 +188,9 @@
             </p:column>
         </p:dataTable>
     </p:panel>
+    
+        <!-- Componente poll que se ejecuta cada 3 segundos para actualizar -->
+        <p:poll interval="3" listener="#{usuarioBean.cargarUsuarios}" update="usuarioTable" />
 </h:form>
 
 </h:body>

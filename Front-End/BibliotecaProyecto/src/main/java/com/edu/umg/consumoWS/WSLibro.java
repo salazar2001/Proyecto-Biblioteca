@@ -18,12 +18,21 @@ import java.util.Date;
 import java.util.List;
 
 public class WSLibro {
-
-
+    //Agregar aca los Endpoints de cada WS
+    private static final 
+            String WSLISTAR_URL="http://192.168.0.100:8083/WSListar-1.0-SNAPSHOT/ws/listar/libros";
+    private static final 
+            String WSINSERTAR_URL="http://192.168.0.110:8082/WSInsertar-1.0-SNAPSHOT/ws/insertar/libro";
+    private static final 
+            String WSUPDATE_URL="http://192.168.0.104:8084/WSUpdate-1.0-SNAPSHOT/ws/actualizar/libro";
     // Obtener todos los libros
     public List<Libro> obtenerLibros() throws Exception {
         List<Libro> libros = new ArrayList<>();
+<<<<<<< HEAD
         URL url = new URL("http://192.168.0.103:8080/WSListar/ws/listar/libros");
+=======
+        URL url = new URL(WSLISTAR_URL);
+>>>>>>> b4f924053c3b59ec7d7af87494f01e99e53b4c57
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -86,7 +95,11 @@ public class WSLibro {
 
     // Crear un nuevo libro
     public void crearLibro(Libro libro) throws Exception {
+<<<<<<< HEAD
         URL url = new URL("http://192.168.0.100:8080/WSInsert/ws/Insertar/libros/agregar");
+=======
+        URL url = new URL(WSINSERTAR_URL);
+>>>>>>> b4f924053c3b59ec7d7af87494f01e99e53b4c57
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -128,7 +141,11 @@ public class WSLibro {
 
     // Actualizar un libro existente
     public void actualizarLibro(Libro libro) throws Exception {
+<<<<<<< HEAD
         URL url = new URL("http://192.168.0.101:8080/WSUpdatBiblioteca/ws/Updates/Libros" + "/" + libro.getId_libro());
+=======
+        URL url = new URL(WSUPDATE_URL + "/" + libro.getId_libro());
+>>>>>>> b4f924053c3b59ec7d7af87494f01e99e53b4c57
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");
