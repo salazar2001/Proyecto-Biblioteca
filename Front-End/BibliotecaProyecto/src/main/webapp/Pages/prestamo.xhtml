@@ -86,6 +86,7 @@
     </style>
 </h:head>
     <h:body>
+        <p:growl id="messages" showDetail="true" showSummary="false" />
 <h1 class="ui-widget-header" style="text-align: center; margin-bottom: 20px; color: #333;">Control de Prestamo</h1>
 
 <!-- Barra de búsqueda centrada -->
@@ -116,7 +117,7 @@
         </p:panelGrid>
 
         <p:commandButton value="Guardar" action="#{prestamoBean.actualizarPrestamo}" 
-                         update=":formPrestamo:prestamoTable :formSeleccionarLibro:libroTable" 
+                         update=":messages, :formPrestamo:prestamoTable :formSeleccionarLibro:libroTable" 
                          oncomplete="PF('dlgEditarPrestamo').hide();" />
         <p:commandButton value="Cancelar" type="button" 
                          onclick="PF('dlgEditarPrestamo').hide();"
@@ -147,14 +148,13 @@
                          action="#{prestamoBean.actusuario()}"/>
     
         <p:commandButton value="Guardar" action="#{prestamoBean.agregarPrestamo}" 
-                         update=":formAgregarPrestamo:messages, :formPrestamo:prestamoTable,
+                         update=":messages, :formPrestamo:prestamoTable,
                          formSeleccionarLibro:libroTable" 
                          oncomplete="PF('dlgAgregarPrestamo').hide();" 
                          style="margin-left: 10px;"/>
 
         <p:commandButton value="Cancelar" type="button" onclick="PF('dlgAgregarPrestamo').hide();" style="margin-left:10px;" />
 
-        <p:messages id="messages" showDetail="true" />
     </h:form>
 </p:dialog>
 
@@ -186,7 +186,7 @@
 
         <!-- Botón de seleccionar, deshabilitado si el libro seleccionado tiene estado 'NO-DISPONIBLE' -->
         <p:commandButton value="Seleccionar" actionListener="#{prestamoBean.seleccionarLibro}" 
-                         update=":formAgregarPrestamo" oncomplete="PF('dlgSeleccionarLibro').hide();" 
+                         update=":messages, :formAgregarPrestamo" oncomplete="PF('dlgSeleccionarLibro').hide();" 
                          style="margin-top: 10px;" 
                          disabled="#{prestamoBean.libroSeleccionado.estado.toUpperCase() eq 'NO-DISPONIBLE'}"/>
 
@@ -200,9 +200,6 @@
 <p:dialog header="Seleccionar Usuario" widgetVar="dlgSeleccionarUsuario" modal="true" 
           showEffect="fade" hideEffect="fade" resizable="false" style="width: 50%;">
     <h:form id="formSeleccionarUsuario">
-        <!-- Mensajes de error o éxito -->
-        <p:messages id="mensajes" />
-
         <p:dataTable id="usuarioTable" value="#{prestamoBean.usuarios}" var="usuario" 
                      selectionMode="single" selection="#{prestamoBean.usuarioSeleccionado}" 
                      rowKey="#{usuario.id_usuario}" style="max-height: 300px; max-width: 600px; overflow-y: auto;" 
@@ -229,7 +226,7 @@
 
         <!-- Botón de seleccionar, deshabilitado si el usuario seleccionado está inactivo -->
         <p:commandButton value="Seleccionar" actionListener="#{prestamoBean.seleccionarUsuario}" 
-                         update=":formAgregarPrestamo" oncomplete="PF('dlgSeleccionarUsuario').hide();" 
+                         update=":messages, :formAgregarPrestamo" oncomplete="PF('dlgSeleccionarUsuario').hide();" 
                          style="margin-top: 10px;" disabled="#{prestamoBean.usuarioSeleccionado.estado.toUpperCase() eq 'INACTIVO'}"/>
 
         <p:commandButton value="Cancelar" type="button" onclick="PF('dlgSeleccionarUsuario').hide();" 
@@ -245,28 +242,28 @@
         <p:dataTable id="prestamoTable" value="#{prestamoBean.prestamos}" var="prestamo" 
                      paginator="true" rows="10" style="width:100%" widgetVar="libroTable" lazy="false">
             
-            <p:column headerText="ID Prestamo" sortBy="#{prestamo.id_prestamo}" filterBy="#{prestamo.id_prestamo}">
+            <p:column headerText="ID Prestamo">
                 <h:outputText value="#{prestamo.id_prestamo}" />
             </p:column>
-            <p:column headerText="ID Usuario" sortBy="#{prestamo.usuario.id_usuario}" filterBy="#{prestamo.usuario.id_usuario}">
+            <p:column headerText="ID Usuario">
                 <h:outputText value="#{prestamo.usuario.id_usuario}" />
             </p:column>
             <p:column headerText="Usuario">
                 <h:outputText value="#{prestamo.usuario.nombre}" />
             </p:column>
-            <p:column headerText="Libro" sortBy="#{prestamo.libro.titulo}" filterBy="#{prestamo.libro.titulo}">
+            <p:column headerText="Libro">
                 <h:outputText value="#{prestamo.libro.titulo}" />
             </p:column>
             <p:column headerText="ISBN">
                 <h:outputText value="#{prestamo.libro.isbn}" />
             </p:column>
-            <p:column headerText="Fecha Prestamo" sortBy="#{prestamo.fecha_prestamo}" filterBy="#{prestamo.fecha_prestamo}">
+            <p:column headerText="Fecha Prestamo">
                 <h:outputText value="#{prestamo.fecha_prestamo}" converter="dateConverter" />
             </p:column>
-            <p:column headerText="Fecha Devolucion" sortBy="#{prestamo.fecha_devolucion}" filterBy="#{prestamo.fecha_devolucion}">
+            <p:column headerText="Fecha Devolucion">
                 <h:outputText value="#{prestamo.fecha_devolucion}" converter="dateConverter" />
             </p:column>
-            <p:column headerText="Estado" sortBy="#{prestamo.estado}" filterBy="#{prestamo.estado}">
+            <p:column headerText="Estado">
                 <h:outputText styleClass="estado-#{prestamo.estado.toLowerCase()} " value="#{prestamo.estado.toUpperCase()}" />
             </p:column>            
             <p:column headerText="Acciones">
@@ -279,6 +276,8 @@
            
         </p:dataTable>
     </p:panel>
+            <!-- Componente poll que se ejecuta cada 3 segundos para actualizar -->
+        <p:poll interval="3" listener="#{prestamoBean.cargarPrestamo}" update="prestamoTable" />
 </h:form>
 
 </h:body>

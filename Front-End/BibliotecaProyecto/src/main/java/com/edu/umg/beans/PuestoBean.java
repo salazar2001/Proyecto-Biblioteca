@@ -6,25 +6,28 @@ package com.edu.umg.beans;
 
 import com.edu.umg.consumoWS.WSPuesto;
 import com.edu.umg.entity.Puesto;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 @ManagedBean
 @ViewScoped
-public class PuestoBean {
+public class PuestoBean implements Serializable {
     private WSPuesto wsPuesto = new WSPuesto();
     private List<Puesto> listaPuestos;
     private Puesto nuevoPuesto = new Puesto();
     private Puesto puestoEditar = new Puesto();
 
-    public PuestoBean() {
+    public void PuestoBean() {
         // Cargar la lista de puestos al inicializar el bean
         try {
             listaPuestos = wsPuesto.obtenerPuestos();
         } catch (Exception e) {
-            e.printStackTrace(); // Manejo de excepciones según tu lógica
+            e.printStackTrace(); 
         }
     }
 
@@ -37,28 +40,43 @@ public class PuestoBean {
     public void agregarPuesto() {
         try {
             wsPuesto.crearPuesto(nuevoPuesto);
-            // Recargar la lista de puestos después de agregar
+
             listaPuestos = wsPuesto.obtenerPuestos();
-            nuevoPuesto = new Puesto(); // Reiniciar el objeto
+            nuevoPuesto = new Puesto(); 
+            
+            FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_INFO, 
+            "Éxito", "Puesto agregado correctamente."));
         } catch (Exception e) {
-            e.printStackTrace(); // Manejo de excepciones según tu lógica
+            e.printStackTrace(); 
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                "Error", "Error al agregar Puesto: WebService no responde "));
         }
     }
 
     // Método para preparar la edición de un puesto
     public void prepararEdicion(Puesto puesto) {
-        puestoEditar = puesto; // Asignar el puesto seleccionado a editar
+        puestoEditar = puesto; 
     }
 
     // Método para actualizar un puesto existente
     public void actualizarPuesto() {
         try {
             wsPuesto.actualizarPuesto(puestoEditar);
-            // Recargar la lista de puestos después de la actualización
+
             listaPuestos = wsPuesto.obtenerPuestos();
-            puestoEditar = new Puesto(); // Reiniciar el objeto
+            puestoEditar = new Puesto(); 
+            
+            
+            FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_INFO, 
+            "Éxito", "Puesto actualizado correctamente."));
         } catch (Exception e) {
-            e.printStackTrace(); // Manejo de excepciones según tu lógica
+            e.printStackTrace();
+                        FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                "Error", "Error al actualizar Puesto: WebService no responde "));
         }
     }
 

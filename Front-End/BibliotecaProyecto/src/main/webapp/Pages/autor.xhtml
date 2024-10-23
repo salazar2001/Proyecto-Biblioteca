@@ -29,6 +29,7 @@
 </h:head>
 
 <h:body>
+    <p:growl id="messages" showDetail="true" showSummary="false" />
 <h1 class="ui-widget-header" style="text-align: center; margin-bottom: 20px; color: #333;">Control de Autores</h1>
 
 <!-- Barra de búsqueda y botón para agregar autor -->
@@ -58,7 +59,7 @@
         </p:panelGrid>
 
         <p:commandButton value="Guardar" action="#{autorBean.agregarAutor}" 
-                         update=":formAgregarAutor:messages, :formAutores:autorTable" 
+                         update=":messages, :formAutores:autorTable" 
                          oncomplete="PF('dlgAgregarAutor').hide();" style="margin-left: 110px;"/>
 
         <p:commandButton value="Cancelar" type="button" onclick="PF('dlgAgregarAutor').hide();" style="margin-left:10px;" />
@@ -70,7 +71,6 @@
 <p:dialog header="Editar Autor" widgetVar="dlgEditarAutor" modal="true" 
           showEffect="fade" hideEffect="fade" resizable="false">
     <h:form id="formEditarAutor">  
-        <p:messages id="messages" showDetail="true" />
         
         <h:outputText value="#{autorBean.autorEditar.nombre} #{autorBean.autorEditar.apellido}" 
                       style="font-weight: bold; margin-bottom: 10px; display: block; text-align: center;" />
@@ -88,7 +88,7 @@
         </p:panelGrid>
 
         <p:commandButton value="Actualizar" action="#{autorBean.actualizarAutor}" 
-                         update=":formAutores:autorTable" 
+                         update=":messages, :formAutores:autorTable" 
                          oncomplete="PF('dlgEditarAutor').hide();" style="margin-left: 70px;"/>
         <p:commandButton value="Cancelar" type="button" onclick="PF('dlgEditarAutor').hide();" style="margin-left: 10px;" />
     </h:form>
@@ -100,19 +100,19 @@
         <p:dataTable id="autorTable" value="#{autorBean.autores}" var="autor" 
                      paginator="true" rows="10" style="width:100%" widgetVar="autorTable">
             
-            <p:column headerText="ID" sortBy="#{autor.id_autor}" filterBy="#{autor.id_autor}">
+            <p:column headerText="ID">
                 <h:outputText value="#{autor.id_autor}" />
             </p:column>
-            <p:column headerText="Nombre" sortBy="#{autor.nombre}" filterBy="#{autor.nombre}">
+            <p:column headerText="Nombre">
                 <h:outputText value="#{autor.nombre}" />
             </p:column>
-            <p:column headerText="Apellido" sortBy="#{autor.apellido}" filterBy="#{autor.apellido}">
+            <p:column headerText="Apellido">
                 <h:outputText value="#{autor.apellido}" />
             </p:column>
             <p:column headerText="Observaciones">
                 <h:outputText value="#{autor.observaciones}" />
             </p:column>
-            <p:column headerText="Fecha Registro" sortBy="#{autor.fecha_registro}" filterBy="#{autor.fecha_registro}">
+            <p:column headerText="Fecha Registro">
                 <h:outputText value="#{autor.fecha_registro}" converter="dateConverter" />
             </p:column>
             
@@ -124,6 +124,8 @@
             </p:column>
         </p:dataTable>
     </p:panel>
+            <!-- Componente poll que se ejecuta cada 3 segundos para actualizar -->
+        <p:poll interval="3" listener="#{autorBean.cargarAutores}" update="autorTable" />
 </h:form>
 
 </h:body>

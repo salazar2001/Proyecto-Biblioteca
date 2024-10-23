@@ -65,32 +65,39 @@ public class PersonalBean implements Serializable {
     // Método para agregar un nuevo personal
     public void agregarPersonal() {
         try {
-            nuevoPersonal.setPuesto(puestoSeleccionado);  // Asigna el puesto seleccionado
-            wsPersonal.crearPersonal(nuevoPersonal);      // Llama al servicio web para crear el personal
+            nuevoPersonal.setPuesto(puestoSeleccionado);  
+            wsPersonal.crearPersonal(nuevoPersonal);      
             nuevoPersonal = new Personal();
-            cargarPersonal();   // Refresca la lista de personal
+            cargarPersonal();   
+            FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_INFO, 
+            "Éxito", "Persona agregada correctamente."));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo agregar el personal: " + e.getMessage()));
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error al agregar el persona: WebService no responde "));
         }
     }
 
     // Método para actualizar el personal editado
     public void actualizarPersonal() {
         try {
-            personalEditar.setPuesto(puestoSeleccionado);  // Actualiza el puesto seleccionado
-            wsPersonal.actualizarPersonal(personalEditar); // Llama al servicio web para actualizar el personal
-            cargarPersonal();   // Refresca la lista de personal
+            personalEditar.setPuesto(puestoSeleccionado);  
+            wsPersonal.actualizarPersonal(personalEditar); 
+            cargarPersonal();   
+            FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_INFO, 
+            "Éxito", "Persona actualizada correctamente."));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo actualizar el personal: " + e.getMessage()));
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error al actualizar el persona: WebService no responde "));
+            cargarPersonal();   
         }
     }
 
     // Método para seleccionar un puesto
     public void seleccionarPuesto() {
         if (puestoSeleccionado != null) {
-            personalEditar.setPuesto(puestoSeleccionado); // Asigna el puesto seleccionado al personal editado
+            personalEditar.setPuesto(puestoSeleccionado); 
         }
     }
     

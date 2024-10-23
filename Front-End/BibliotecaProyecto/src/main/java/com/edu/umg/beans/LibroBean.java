@@ -12,21 +12,20 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.List;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name = "libroBean")
 @ViewScoped
 public class LibroBean implements Serializable {
 
-    private List<Libro> libros;           // Lista de libros para mostrar en la tabla
-    private Libro nuevoLibro;              // Libro nuevo para agregar
-    private Libro libroEditar;             // Libro que se está editando
-    private WSLibro wsLibro;               // Cliente WS para realizar las operaciones de Libro
+    private List<Libro> libros;           
+    private Libro nuevoLibro;              
+    private Libro libroEditar;             
+    private WSLibro wsLibro;               
     
-    private List<Autor> autores;          // Lista de autores para mostrar en la tabla
-    private Autor autorSeleccionado;               // Autor nuevo para agregar   
-    private WSAutor wsAutor;               // Cliente WS para realizar las operaciones de Autor
+    private List<Autor> autores;          
+    private Autor autorSeleccionado;               
+    private WSAutor wsAutor;               
     
     private List<Tipo> tipos;
     private Tipo tipoSeleccionado;
@@ -73,7 +72,6 @@ public class LibroBean implements Serializable {
     //Metodo para obtener Tipos
     public void cargarTipos() {
         try {
-            System.out.println("Cargando Data Tipos");
             tipos = wsTipo.obtenerTipos(); // Llamada al WS para obtener tipos
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, 
@@ -90,51 +88,53 @@ public class LibroBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, 
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, 
                     "Error", "Debes seleccionar un autor."));
-                return; // Salir si no hay autor seleccionado
+                return; 
             }
 
             if (tipoSeleccionado == null) {
                 FacesContext.getCurrentInstance().addMessage(null, 
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, 
                     "Error", "Debes seleccionar un tipo."));
-                return; // Salir si no hay tipo seleccionado
+                return; 
             }
 
             nuevoLibro.setAutor(autorSeleccionado);
             nuevoLibro.setTipo(tipoSeleccionado);
-            wsLibro.crearLibro(nuevoLibro);   // Llamada al WS para agregar el libro
+            wsLibro.crearLibro(nuevoLibro);   
 
-            nuevoLibro = new Libro();          // Limpia el formulario después de agregar
+            nuevoLibro = new Libro();          
 
-            cargarLibros();                    // Refresca la lista de libros
-            cargarAutores();                   // Refresca la lista de autores
+            cargarLibros();                    
+            cargarAutores();                   
+            
+            FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_INFO, 
+            "Éxito", "Libro agregado correctamente."));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, 
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                "Error", "No se pudo agregar el libro: " + e.getMessage()));
+                "Error", "Error al agregar el libro: WebService no responde"));
         }
     }
 
 
     public void seleccionarAutor(){
         if (autorSeleccionado != null) {
-            libroEditar.setAutor(autorSeleccionado); // Asigna el puesto seleccionado al personal editado
+            libroEditar.setAutor(autorSeleccionado); 
         }
     }
     
     public void seleccionarTipo(){
         if (tipoSeleccionado != null) {
-            libroEditar.setTipo(tipoSeleccionado); // Asigna el puesto seleccionado al personal editado
+            libroEditar.setTipo(tipoSeleccionado); 
         }
     }
     
     public void recargarPageLibros(){
-        cargarLibros();                   // Inicializa la lista de libros
-        cargarAutores();                  // Inicializa la lista de autores
+        cargarLibros();                  
+        cargarAutores();                  
         cargarTipos();
     }
-
-    // Getters y Setters
 
     public List<Libro> getLibros() {
         return libros;
