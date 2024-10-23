@@ -24,7 +24,7 @@ public class WSPrestamo {
     // Obtener todos los préstamos
     public List<Prestamo> obtenerPrestamos() throws Exception {
         List<Prestamo> prestamos = new ArrayList<>();
-        URL url = new URL("http://192.168.191.135:8080/WSListar/ws/listar/prestamos");
+        URL url = new URL("http://192.168.0.103:8080/WSListar/ws/listar/prestamos");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -108,7 +108,7 @@ public class WSPrestamo {
 
     // Crear un nuevo préstamo
     public void crearPrestamo(Prestamo prestamo) throws Exception {
-        URL url = new URL("http://192.168.191.112:8082/WSInsert/ws/Insertar/prestamos/agregar");
+        URL url = new URL("http://192.168.0.100:8080/WSInsert/ws/Insertar/prestamos/agregar");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -146,7 +146,7 @@ public class WSPrestamo {
 
     // Actualizar un préstamo existente
     public void actualizarPrestamo(Prestamo prestamo) throws Exception {
-        URL url = new URL("http://192.168.191.240:8080/WSUpdatBiblioteca/ws/Updates/Prestamos" + "/" + prestamo.getId_prestamo());
+        URL url = new URL("http://192.168.0.101:8080/WSUpdatBiblioteca/ws/Updates/Prestamos" + "/" + prestamo.getId_prestamo());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");

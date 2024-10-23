@@ -21,7 +21,7 @@ public class WSPersonal {
     // Obtener todos los personales
     public List<Personal> obtenerPersonal() throws Exception {
         List<Personal> personalList = new ArrayList<>();
-        URL url = new URL("http://192.168.191.135:8080/WSListar/ws/listar/personal");
+        URL url = new URL("http://192.168.0.103:8080/WSListar/ws/listar/personal");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -69,7 +69,7 @@ public class WSPersonal {
 
     // Crear un nuevo personal
     public void crearPersonal(Personal personal) throws Exception {
-        URL url = new URL("http://192.168.191.112:8082/WSInsert/ws/Insertar/personal/agregar");
+        URL url = new URL("http://192.168.0.100:8080/WSInsert/ws/Insertar/personal/agregar");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -108,7 +108,7 @@ public class WSPersonal {
 
     // Actualizar un personal existente
     public void actualizarPersonal(Personal personal) throws Exception {
-        URL url = new URL("http://192.168.191.240:8080/WSUpdatBiblioteca/ws/Updates/Personal" + "/" + personal.getId_personal());
+        URL url = new URL("http://192.168.0.101:8080/WSUpdatBiblioteca/ws/Updates/Personal" + "/" + personal.getId_personal());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");
