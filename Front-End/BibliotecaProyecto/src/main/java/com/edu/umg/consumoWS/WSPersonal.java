@@ -19,6 +19,7 @@ import java.util.List;
 public class WSPersonal {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     private static final String WS_URL = "http://192.168.191.142:8080/WSBiblioteca/webresources/personal";
 =======
 >>>>>>> e8cdb30 (Nuevo formato Json)
@@ -33,6 +34,13 @@ public class WSPersonal {
             String WSUPDATE_URL="http://192.168.0.104:8084/WSUpdate-1.0-SNAPSHOT/ws/actualizar/personal";
     
 >>>>>>> dc1634f (Agregando CONSTANTES para mejor consumo de los WS)
+=======
+    //Agregar aca los Endpoints de cada WS
+    private static final String WSLISTAR_URL=" ";
+    private static final String WSINSERTAR_URL=" ";
+    private static final String WSUPDATE_URL=" ";
+    
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
     // Obtener todos los personales
     public List<Personal> obtenerPersonal() throws Exception {
         List<Personal> personalList = new ArrayList<>();

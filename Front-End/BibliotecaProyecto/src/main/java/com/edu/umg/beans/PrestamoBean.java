@@ -46,7 +46,11 @@ public class PrestamoBean implements Serializable {
         cargarPrestamo();
         
         prestamoEditar = new Prestamo();
+<<<<<<< HEAD
         nuevoPrestamo = new Prestamo();              
+=======
+        nuevoPrestamo = new Prestamo();         // Inicializa el objeto nuevoLibro       
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
         
     }
     
@@ -85,12 +89,23 @@ public class PrestamoBean implements Serializable {
     
     // Método para agregar un nuevo libro
     public void agregarPrestamo() {
+<<<<<<< HEAD
         try {           
+=======
+        try {
+            
+                if ("disponible".equals(libroSeleccionado.getEstado().toLowerCase())) {
+                nuevoPrestamo.setLibro(libroSeleccionado);
+                libroSeleccionado.setEstado("no-disponible");
+                wsLibro.actualizarLibro(libroSeleccionado);
+            }
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
         
             nuevoPrestamo.setLibro(libroSeleccionado);
             nuevoPrestamo.setUsuario(usuarioSeleccionado);
             wsPrestamo.crearPrestamo(nuevoPrestamo);
             
+<<<<<<< HEAD
             if ("disponible".equals(libroSeleccionado.getEstado().toLowerCase())) {
                 libroSeleccionado.setEstado("no-disponible");
                 wsLibro.actualizarLibro(libroSeleccionado);
@@ -101,17 +116,29 @@ public class PrestamoBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, 
             new FacesMessage(FacesMessage.SEVERITY_INFO, 
             "Éxito", "Préstamo agregado correctamente."));
+=======
+            nuevoPrestamo = new Prestamo(); 
+            cargarPrestamo();
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
 
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, 
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+<<<<<<< HEAD
                 "Error", "Error al agregar el préstamo: WebService no responde"));
+=======
+                "Error", "No se pudo agregar el prestamo: " + e.getMessage()));
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
         }
     }
     
     // Método para preparar la edición de un préstamo
     public void prepararEdicion(Prestamo prestamo) {
+<<<<<<< HEAD
         this.prestamoEditar = prestamo; 
+=======
+        this.prestamoEditar = prestamo; // Asigna el préstamo seleccionado a la propiedad prestamoEditar
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
         
     }
     
@@ -120,26 +147,52 @@ public class PrestamoBean implements Serializable {
     // Método para actualizar un préstamo existente
     public void actualizarPrestamo() {      
         try {
+<<<<<<< HEAD
                 wsPrestamo.actualizarPrestamo(prestamoEditar);
                        
+=======
+                // Llamar al método del WS para actualizar el préstamo
+                wsPrestamo.actualizarPrestamo(prestamoEditar);
+                
+        
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
                 if("entregado".equals(prestamoEditar.getEstado().toLowerCase())){
                     Libro libro = prestamoEditar.getLibro();
                     libro.setEstado("disponible");
             
+<<<<<<< HEAD
                     wsLibro.actualizarLibro(libro);
                 }
             
             prestamoEditar = new Prestamo();
             cargarPrestamo();
 
+=======
+                    // Llamar al WS para actualizar el libro
+                    wsLibro.actualizarLibro(libro);
+                }
+            
+            // Limpiar la selección
+            
+            prestamoEditar = new Prestamo();
+            cargarPrestamo();
+
+            // Mensaje de éxito
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
             FacesContext.getCurrentInstance().addMessage(null, 
                 new FacesMessage(FacesMessage.SEVERITY_INFO, 
                 "Éxito", "Préstamo actualizado correctamente."));
         } catch (Exception e) {
+<<<<<<< HEAD
             cargarPrestamo();
             FacesContext.getCurrentInstance().addMessage(null, 
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, 
                 "Error", "Error al actualizar el préstamo: WebService no responde"));
+=======
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                "Error", "No se pudo actualizar el préstamo: " + e.getMessage()));
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
         }
     }
 
@@ -152,13 +205,25 @@ public class PrestamoBean implements Serializable {
         cargarUsuarios();
     }
     
+<<<<<<< HEAD
+=======
+    
+    
+    
+    
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
     public void seleccionarLibro() throws Exception{
         if(libroSeleccionado != null){
 
                 nuevoPrestamo.setLibro(libroSeleccionado);
         }
     }
+<<<<<<< HEAD
    
+=======
+    
+    
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
     public void seleccionarUsuario(){
         if(usuarioSeleccionado != null){
             nuevoPrestamo.setUsuario(usuarioSeleccionado);

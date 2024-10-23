@@ -8,6 +8,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.List;
+<<<<<<< HEAD
+=======
+import javax.faces.bean.RequestScoped;
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
 import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name = "autorBean")
@@ -34,7 +38,11 @@ public class AutorBean implements Serializable {
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, 
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+<<<<<<< HEAD
                 "Error", "Error al cargar los autores: WebService no responde"));
+=======
+                "Error", "No se pudieron cargar los autores: " + e.getMessage()));
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
         }
     }
 
@@ -44,6 +52,7 @@ public class AutorBean implements Serializable {
             wsAutor.crearAutor(nuevoAutor); // Llamada al WS para agregar el autor
             nuevoAutor = new Autor();       // Limpia el formulario después de agregar
             cargarAutores();                // Refresca la lista de autores
+<<<<<<< HEAD
             
                         // Mensaje de éxito
             FacesContext.getCurrentInstance().addMessage(null, 
@@ -53,6 +62,12 @@ public class AutorBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, 
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, 
                 "Error", "Error al agregar el autor: WebService no responde "));
+=======
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                "Error", "No se pudo agregar el autor: " + e.getMessage()));
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
         }
     }
 
@@ -67,6 +82,7 @@ public class AutorBean implements Serializable {
             wsAutor.actualizarAutor(autorEditar); // Llamada al WS para actualizar el autor
             cargarAutores(); // Refresca la lista de autores después de la actualización
             autorEditar = new Autor(); // Limpia el objeto autorEditar
+<<<<<<< HEAD
             
             
         } catch (Exception e) {
@@ -74,6 +90,12 @@ public class AutorBean implements Serializable {
                 new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 "Error", "Error al actualizar el autor: WebService no responde"));
             cargarAutores();
+=======
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                "Error", "No se pudo actualizar el autor: " + e.getMessage()));
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
         }
     }
     

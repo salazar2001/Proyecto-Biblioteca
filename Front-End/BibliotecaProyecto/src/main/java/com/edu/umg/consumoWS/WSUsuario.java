@@ -17,6 +17,7 @@ import java.util.List;
 public class WSUsuario {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     private static final String WS_URL = "http://192.168.191.142:8080/WSBiblioteca/webresources/usuarios";
 =======
 >>>>>>> e8cdb30 (Nuevo formato Json)
@@ -40,6 +41,13 @@ public class WSUsuario {
 >>>>>>> eb3cb13 (Agregando vistas actualizadas)
     
 >>>>>>> e6ddc7e (Agregando)
+=======
+        //Agregar aca los Endpoints de cada WS
+    private static final String WSLISTAR_URL=" ";
+    private static final String WSINSERTAR_URL=" ";
+    private static final String WSUPDATE_URL=" ";
+    
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
     // Obtener todos los usuarios
     public List<Usuario> obtenerUsuarios() throws Exception {
         List<Usuario> usuarios = new ArrayList<>();

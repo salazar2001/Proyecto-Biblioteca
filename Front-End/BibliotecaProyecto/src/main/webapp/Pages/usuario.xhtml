@@ -152,6 +152,7 @@
 <!-- Tabla de usuarios -->
 <h:form id="formUsuarios">
     <p:panel header="Lista de Usuarios">  
+<<<<<<< HEAD
         <p:dataTable id="usuarioTable" value="#{usuarioBean.usuarios}" var="usuario" 
                      paginator="true" rows="10" style="width:100%" widgetVar="usuarioTable">
             
@@ -162,6 +163,19 @@
                 <h:outputText value="#{usuario.nombre}" />
             </p:column>
             <p:column headerText="Apellido">
+=======
+        <p:commandButton icon="pi pi-sync" action="#{usuarioBean.actualizar()}"/>
+        <p:dataTable id="usuarioTable" value="#{usuarioBean.usuarios}" var="usuario" 
+                     paginator="true" rows="10" style="width:100%" widgetVar="usuarioTable">
+            
+            <p:column headerText="ID" sortBy="#{usuario.id_usuario}" filterBy="#{usuario.id_usuario}">
+                <h:outputText value="#{usuario.id_usuario}" />
+            </p:column>
+            <p:column headerText="Nombre" sortBy="#{usuario.nombre}" filterBy="#{usuario.nombre}">
+                <h:outputText value="#{usuario.nombre}" />
+            </p:column>
+            <p:column headerText="Apellido" sortBy="#{usuario.apellido}" filterBy="#{usuario.apellido}">
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
                 <h:outputText value="#{usuario.apellido}" />
             </p:column>
             <p:column headerText="Correo">
@@ -170,6 +184,7 @@
             <p:column headerText="Teléfono">
                 <h:outputText value="#{usuario.telefono}" />
             </p:column>
+<<<<<<< HEAD
             <p:column headerText="Fecha de Nacimiento" >
                 <h:outputText value="#{usuario.fecha_nacimiento}" converter="dateConverter" />
             </p:column>
@@ -177,6 +192,15 @@
                 <h:outputText value="#{usuario.fecha_registro}" converter="dateConverter" />
             </p:column>
             <p:column headerText="Estado">
+=======
+            <p:column headerText="Fecha de Nacimiento" sortBy="#{usuario.fecha_nacimiento}" filterBy="#{usuario.fecha_nacimiento}">
+                <h:outputText value="#{usuario.fecha_nacimiento}" converter="dateConverter" />
+            </p:column>
+            <p:column headerText="Fecha Registro" sortBy="#{usuario.fecha_registro}" filterBy="#{usuario.fecha_registro}">
+                <h:outputText value="#{usuario.fecha_registro}" converter="dateConverter" />
+            </p:column>
+            <p:column headerText="Estado" sortBy="#{usuario.estado}" filterBy="#{usuario.estado}">
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
                 <h:outputText styleClass="estado-#{usuario.estado.toLowerCase()}" value="#{usuario.estado.toUpperCase()}" />
             </p:column>
             
@@ -189,8 +213,13 @@
         </p:dataTable>
     </p:panel>
     
+<<<<<<< HEAD
         <!-- Componente poll que se ejecuta cada 3 segundos para actualizar -->
         <p:poll interval="3" listener="#{usuarioBean.cargarUsuarios}" update="usuarioTable" />
+=======
+        <!-- Componente poll que se ejecuta cada 2 segundos -->
+        <p:poll interval="2" listener="#{usuarioBean.cargarUsuarios}" update="usuarioTable" />
+>>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
 </h:form>
 
 </h:body>
