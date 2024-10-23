@@ -24,7 +24,11 @@ public class WSPuesto {
     // Obtener todos los puestos
     public List<Puesto> obtenerPuestos() throws Exception {
         List<Puesto> puestos = new ArrayList<>();
+<<<<<<< HEAD
+        URL url = new URL("http://192.168.0.103:8080/WSListar/ws/listar/puestos");
+=======
         URL url = new URL(WSLISTAR_URL);
+>>>>>>> b4f924053c3b59ec7d7af87494f01e99e53b4c57
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -58,7 +62,11 @@ public class WSPuesto {
 
     // Crear un nuevo puesto
     public void crearPuesto(Puesto puesto) throws Exception {
+<<<<<<< HEAD
+        URL url = new URL("http://192.168.0.100:8080/WSInsert/ws/Insertar/puestos/agregar");
+=======
         URL url = new URL(WSINSERTAR_URL);
+>>>>>>> b4f924053c3b59ec7d7af87494f01e99e53b4c57
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -83,7 +91,11 @@ public class WSPuesto {
 
     // Actualizar un puesto existente
     public void actualizarPuesto(Puesto puesto) throws Exception {
+<<<<<<< HEAD
+        URL url = new URL("http://192.168.0.101:8080/WSUpdatBiblioteca/ws/Updates/Puesto" + "/" + puesto.getId_puesto());
+=======
         URL url = new URL(WSUPDATE_URL + "/" + puesto.getId_puesto());
+>>>>>>> b4f924053c3b59ec7d7af87494f01e99e53b4c57
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");

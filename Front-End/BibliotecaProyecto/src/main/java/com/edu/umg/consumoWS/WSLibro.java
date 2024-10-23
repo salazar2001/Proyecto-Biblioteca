@@ -28,7 +28,11 @@ public class WSLibro {
     // Obtener todos los libros
     public List<Libro> obtenerLibros() throws Exception {
         List<Libro> libros = new ArrayList<>();
+<<<<<<< HEAD
+        URL url = new URL("http://192.168.0.103:8080/WSListar/ws/listar/libros");
+=======
         URL url = new URL(WSLISTAR_URL);
+>>>>>>> b4f924053c3b59ec7d7af87494f01e99e53b4c57
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -91,7 +95,11 @@ public class WSLibro {
 
     // Crear un nuevo libro
     public void crearLibro(Libro libro) throws Exception {
+<<<<<<< HEAD
+        URL url = new URL("http://192.168.0.100:8080/WSInsert/ws/Insertar/libros/agregar");
+=======
         URL url = new URL(WSINSERTAR_URL);
+>>>>>>> b4f924053c3b59ec7d7af87494f01e99e53b4c57
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -133,7 +141,11 @@ public class WSLibro {
 
     // Actualizar un libro existente
     public void actualizarLibro(Libro libro) throws Exception {
+<<<<<<< HEAD
+        URL url = new URL("http://192.168.0.101:8080/WSUpdatBiblioteca/ws/Updates/Libros" + "/" + libro.getId_libro());
+=======
         URL url = new URL(WSUPDATE_URL + "/" + libro.getId_libro());
+>>>>>>> b4f924053c3b59ec7d7af87494f01e99e53b4c57
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");
