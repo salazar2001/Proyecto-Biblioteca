@@ -14,13 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WSTipo {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    private static final String WS_URL = "http://192.168.191.142:8080/WSBiblioteca/webresources/tipos";
-=======
->>>>>>> e8cdb30 (Nuevo formato Json)
-=======
     
         //Agregar aca los Endpoints de cada WS
     private static final 
@@ -30,15 +23,6 @@ public class WSTipo {
     private static final 
             String WSUPDATE_URL="http://192.168.0.104:8084/WSUpdate-1.0-SNAPSHOT/ws/actualizar/tipo";
     
->>>>>>> dc1634f (Agregando CONSTANTES para mejor consumo de los WS)
-=======
-    
-        //Agregar aca los Endpoints de cada WS
-    private static final String WSLISTAR_URL=" ";
-    private static final String WSINSERTAR_URL=" ";
-    private static final String WSUPDATE_URL=" ";
-    
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
 
     // Obtener todos los tipos
     public List<Tipo> obtenerTipos() throws Exception {

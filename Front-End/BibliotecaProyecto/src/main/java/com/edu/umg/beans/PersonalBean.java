@@ -65,7 +65,6 @@ public class PersonalBean implements Serializable {
     // Método para agregar un nuevo personal
     public void agregarPersonal() {
         try {
-<<<<<<< HEAD
             nuevoPersonal.setPuesto(puestoSeleccionado);  
             wsPersonal.crearPersonal(nuevoPersonal);      
             nuevoPersonal = new Personal();
@@ -76,22 +75,12 @@ public class PersonalBean implements Serializable {
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error al agregar el persona: WebService no responde "));
-=======
-            nuevoPersonal.setPuesto(puestoSeleccionado);  // Asigna el puesto seleccionado
-            wsPersonal.crearPersonal(nuevoPersonal);      // Llama al servicio web para crear el personal
-            nuevoPersonal = new Personal();
-            cargarPersonal();   // Refresca la lista de personal
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo agregar el personal: " + e.getMessage()));
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
         }
     }
 
     // Método para actualizar el personal editado
     public void actualizarPersonal() {
         try {
-<<<<<<< HEAD
             personalEditar.setPuesto(puestoSeleccionado);  
             wsPersonal.actualizarPersonal(personalEditar); 
             cargarPersonal();   
@@ -102,25 +91,13 @@ public class PersonalBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error al actualizar el persona: WebService no responde "));
             cargarPersonal();   
-=======
-            personalEditar.setPuesto(puestoSeleccionado);  // Actualiza el puesto seleccionado
-            wsPersonal.actualizarPersonal(personalEditar); // Llama al servicio web para actualizar el personal
-            cargarPersonal();   // Refresca la lista de personal
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo actualizar el personal: " + e.getMessage()));
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
         }
     }
 
     // Método para seleccionar un puesto
     public void seleccionarPuesto() {
         if (puestoSeleccionado != null) {
-<<<<<<< HEAD
             personalEditar.setPuesto(puestoSeleccionado); 
-=======
-            personalEditar.setPuesto(puestoSeleccionado); // Asigna el puesto seleccionado al personal editado
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
         }
     }
     

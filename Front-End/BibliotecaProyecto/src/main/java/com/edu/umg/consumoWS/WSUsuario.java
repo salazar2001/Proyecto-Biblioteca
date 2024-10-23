@@ -15,39 +15,14 @@ import java.util.Date;
 import java.util.List;
 
 public class WSUsuario {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    private static final String WS_URL = "http://192.168.191.142:8080/WSBiblioteca/webresources/usuarios";
-=======
->>>>>>> e8cdb30 (Nuevo formato Json)
-
-=======
         //Agregar aca los Endpoints de cada WS
-<<<<<<< HEAD
-    private static final String WSLISTAR_URL=" ";
-    private static final String WSINSERTAR_URL=" ";
-    private static final String WSUPDATE_URL=" ";
-<<<<<<< HEAD
->>>>>>> dc1634f (Agregando CONSTANTES para mejor consumo de los WS)
-=======
-=======
     private static final 
             String WSLISTAR_URL="http://192.168.0.100:8083/WSListar-1.0-SNAPSHOT/ws/listar/usuarios";
     private static final 
             String WSINSERTAR_URL="http://192.168.0.110:8082/WSInsertar-1.0-SNAPSHOT/ws/insertar/usuario";
     private static final 
             String WSUPDATE_URL="http://192.168.0.104:8084/WSUpdate-1.0-SNAPSHOT/ws/actualizar/usuario";
->>>>>>> eb3cb13 (Agregando vistas actualizadas)
     
->>>>>>> e6ddc7e (Agregando)
-=======
-        //Agregar aca los Endpoints de cada WS
-    private static final String WSLISTAR_URL=" ";
-    private static final String WSINSERTAR_URL=" ";
-    private static final String WSUPDATE_URL=" ";
-    
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
     // Obtener todos los usuarios
     public List<Usuario> obtenerUsuarios() throws Exception {
         List<Usuario> usuarios = new ArrayList<>();

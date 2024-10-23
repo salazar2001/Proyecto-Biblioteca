@@ -55,10 +55,7 @@
 </h:head>
 
 <h:body>
-<<<<<<< HEAD
     <p:growl id="messages" showDetail="true" showSummary="false" />
-=======
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
 <h1 class="ui-widget-header" style="text-align: center; margin-bottom: 20px; color: #333;">Control de Personal</h1>
 
 <!-- Barra de búsqueda centrada -->
@@ -98,20 +95,11 @@
         <p:commandButton value="Seleccionar Puesto" oncomplete="PF('dlgSeleccionarPuesto').show();" update=":formSeleccionarPuesto" styleClass="ui-button-flat" />
 
         <p:commandButton value="Guardar" action="#{personalBean.agregarPersonal}" 
-<<<<<<< HEAD
                          update=":messages, :formPersonal:personalTable" 
-=======
-                         update=":formAgregarPersonal:messages, :formPersonal:personalTable" 
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
                          oncomplete="PF('dlgAgregarPersonal').hide();" 
                          style="margin-left: 10px;"/>
 
         <p:commandButton value="Cancelar" type="button" onclick="PF('dlgAgregarPersonal').hide();" style="margin-left:10px;" />
-<<<<<<< HEAD
-=======
-
-        <p:messages id="messages" showDetail="true" />
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
     </h:form>
 </p:dialog>
 
@@ -144,11 +132,7 @@
         </p:panelGrid>
 
         <p:commandButton value="Guardar" action="#{personalBean.actualizarPersonal}" 
-<<<<<<< HEAD
                          update=":messages, :formPersonal:personalTable" 
-=======
-                         update=":formPersonal:personalTable" 
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
                          oncomplete="PF('dlgEditarPersonal').hide();" />
         <p:commandButton value="Cancelar" type="button" 
                          onclick="PF('dlgEditarPersonal').hide();"
@@ -169,25 +153,17 @@
         </p:dataTable>
 
         <p:commandButton value="Seleccionar" actionListener="#{personalBean.seleccionarPuesto}" 
-<<<<<<< HEAD
                          update=" :messages,:formEditarPersonal" oncomplete="PF('dlgSeleccionarPuesto').hide();" 
-=======
-                         update=":formEditarPersonal" oncomplete="PF('dlgSeleccionarPuesto').hide();" 
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
                          style="margin-top: 10px;" /> <!-- Añade margen superior -->
 
         <p:commandButton value="Cancelar" type="button" onclick="PF('dlgSeleccionarPuesto').hide();" 
                          style="margin-top: 10px; margin-left: 10px;" /> 
                      <!-- Botón para mostrar el diálogo de agregar puesto -->
-<<<<<<< HEAD
         <p:commandButton value="Agregar/Editar" 
                          action="#{puestoBean.agregarPuesto()}" 
                          update=":formPuestosGestionar:puestosTable :formSeleccionarPuesto:puestosTable"
                          styleClass="ui-button-secondary" 
                          oncomplete="PF('dlgGestionarPuestos').show();"
-=======
-        <p:commandButton value="Agregar/Editar" styleClass="ui-button-secondary" oncomplete="PF('dlgGestionarPuestos').show();"
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
                          style="margin-top: 10px;"/>
 
     </h:form>
@@ -201,7 +177,6 @@
         <p:dataTable id="personalTable" value="#{personalBean.personalList}" var="personal" 
                      paginator="true" rows="10" style="width:100%" widgetVar="personalTable">
             
-<<<<<<< HEAD
             <p:column headerText="ID">
                 <h:outputText value="#{personal.id_personal}" />
             </p:column>
@@ -209,15 +184,6 @@
                 <h:outputText value="#{personal.nombre}" />
             </p:column>
             <p:column headerText="Apellido">
-=======
-            <p:column headerText="ID" sortBy="#{personal.id_personal}" filterBy="#{personal.id_personal}">
-                <h:outputText value="#{personal.id_personal}" />
-            </p:column>
-            <p:column headerText="Nombre" sortBy="#{personal.nombre}" filterBy="#{personal.nombre}">
-                <h:outputText value="#{personal.nombre}" />
-            </p:column>
-            <p:column headerText="Apellido" sortBy="#{personal.apellido}" filterBy="#{personal.apellido}">
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
                 <h:outputText value="#{personal.apellido}" />
             </p:column>
             <p:column headerText="Correo">
@@ -226,22 +192,14 @@
             <p:column headerText="Teléfono">
                 <h:outputText value="#{personal.telefono}" />
             </p:column>
-<<<<<<< HEAD
             <p:column headerText="Fecha de Ingreso">
-=======
-            <p:column headerText="Fecha de Ingreso" sortBy="#{personal.fecha_ingreso}" filterBy="#{personal.fecha_ingreso}">
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
                 <h:outputText value="#{personal.fecha_ingreso}" converter="dateConverter" />
             </p:column>
             <p:column headerText="Puesto">
                 <h:outputText value="#{personal.puesto.nombre}" />
             </p:column>
             
-<<<<<<< HEAD
             <p:column headerText="Estado">
-=======
-            <p:column headerText="Estado" sortBy="#{personal.estado}" filterBy="#{personal.estado}">
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
                 <h:outputText styleClass="estado-#{personal.estado.toLowerCase()}" value="#{personal.estado.toUpperCase()}" />
             </p:column>
 
@@ -254,11 +212,8 @@
             
         </p:dataTable>
     </p:panel>
-<<<<<<< HEAD
             <!-- Componente poll que se ejecuta cada 3 segundos para actualizar -->
         <p:poll interval="3" listener="#{personalBean.cargarPersonal}" update="personalTable" />
-=======
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
 </h:form>
 
 <!-- Diálogo para gestionar puestos -->
@@ -280,11 +235,8 @@
         <p:commandButton value="Agregar" icon="pi pi-plus" 
                          oncomplete="PF('dlgAgregarPuesto').show();" />
         <p:commandButton value="Cerrar" onclick="PF('dlgGestionarPuestos').hide();" 
-<<<<<<< HEAD
                          action="#{puestoBean.agregarPuesto()}" 
                          update=":messages,:formSeleccionarPuesto:puestosTable"
-=======
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
                          type="button"
                          style="margin-left: 10px;"/>
     </h:form>
@@ -298,11 +250,7 @@
         <p:inputText id="nombrePuesto" value="#{puestoBean.nuevoPuesto.nombre}" required="true" />
         
         <p:commandButton value="Agregar Puesto" action="#{puestoBean.agregarPuesto()}" 
-<<<<<<< HEAD
                          update=":messages, :formPuestosGestionar:puestosTable :formSeleccionarPuesto:puestosTable" 
-=======
-                         update=":formPuestosGestionar:puestosTable :formSeleccionarPuesto:puestosTable" 
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
                          oncomplete="PF('dlgAgregarPuesto').hide();"
                          style="margin-left: 10px;"/>
         
@@ -320,11 +268,7 @@
         <p:inputText id="nombrePuestoEditar" value="#{puestoBean.puestoEditar.nombre}" required="true" />
         
         <p:commandButton value="Actualizar Puesto" action="#{puestoBean.actualizarPuesto()}" 
-<<<<<<< HEAD
                          update=" :messages, :formPuestosGestionar:puestosTable :formSeleccionarPuesto:puestosTable" 
-=======
-                         update=":formPuestosGestionar:puestosTable :formSeleccionarPuesto:puestosTable" 
->>>>>>> 978cd2794ddb61a19eb00465e3429a57e79b19e1
                          oncomplete="PF('dlgEditarPuesto').hide();"
                          style="margin-left: 10px;"/>
         
