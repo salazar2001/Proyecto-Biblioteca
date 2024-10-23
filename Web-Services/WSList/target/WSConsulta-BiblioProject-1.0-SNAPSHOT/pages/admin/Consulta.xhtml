@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Consulte el Libro por nombre</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+                <h:form id="frmPrincipal">
+            <!-- Panel Principal -->
+            <p:outputPanel id="pnlPrincipal">
+                <p:panelGrid id="grdDatos" columns="4" styleClass="custom-grid">
+                    <!-- Nombre -->
+                    <p:outputLabel value="Nombre:" for="txtNombre" />
+                    <p:inputText id="txtNombre" value="#{bkn_indexUI.datosPersona.nombre}" />
+
+                    <!-- Apellido -->
+                    <p:outputLabel value="Apellido:" for="txtApellido" />
+                    <p:inputText id="txtApellido" value="#{bkn_indexUI.datosPersona.apellido}" />
+
+                   <!-- Botón para mostrar datos -->
+                <p:commandButton id="btnMostrarDatos" value="Mostrar" action="#{bkn_indexUI.agregarPersona()}" styleClass="custom-button"/>
+            </p:outputPanel>
+
+            <br/>
+
+            <!-- Fieldset para mostrar los datos de la persona -->
+            <p:fieldset id="flsDatos" legend="Datos Persona">
+                <p:dataTable value="#{bkn_indexUI.list}" var="dato">
+                    <p:column headerText="Nombre">
+                        <p:outputLabel value="#{dato.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="Apellido">
+                        <p:outputLabel value="#{dato.apellido}" />
+                    </p:column>
+
+                    <p:column headerText="Teléfono">
+                        <p:outputLabel value="#{dato.telefono}" />
+                    </p:column>
+
+                    <p:column headerText="Correo">
+                        <p:outputLabel value="#{dato.correo}" />
+                    </p:column>
+
+                    <p:column headerText="Estado">
+                        <p:outputLabel value="#{dato.estado eq 1 ? 'Activo' : 'Inactivo'}" />
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+        </h:form>
+    </h:body>
+</html>
