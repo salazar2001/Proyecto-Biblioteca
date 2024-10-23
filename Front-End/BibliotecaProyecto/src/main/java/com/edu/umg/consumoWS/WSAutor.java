@@ -16,6 +16,7 @@ import java.util.List;
 
 public class WSAutor {
 <<<<<<< HEAD
+<<<<<<< HEAD
     private static final String WS_URL = "http://192.168.191.142:8080/WSBiblioteca/webresources/autores";
 =======
 >>>>>>> e8cdb30 (Nuevo formato Json)
@@ -28,6 +29,16 @@ public class WSAutor {
 =======
         URL url = new URL("http://192.168.191.135:8080/WSListar/ws/listar/autores"); //Cambiar Ruta de End Point
 >>>>>>> e8cdb30 (Nuevo formato Json)
+=======
+    //Agregar aca los Endpoints de cada WS
+    private static final String WSLISTAR_URL=" ";
+    private static final String WSINSERTAR_URL=" ";
+    private static final String WSUPDATE_URL=" ";
+    // Obtener todos los autores
+    public List<Autor> obtenerAutores() throws Exception {
+        List<Autor> autores = new ArrayList<>();
+        URL url = new URL(WSLISTAR_URL);
+>>>>>>> dc1634f (Agregando CONSTANTES para mejor consumo de los WS)
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -65,10 +76,14 @@ public class WSAutor {
     // Crear un nuevo autor
     public void crearAutor(Autor autor) throws Exception {
 <<<<<<< HEAD
+<<<<<<< HEAD
         URL url = new URL(WS_URL);
 =======
         URL url = new URL("http://192.168.191.112:8082/WSInsert/ws/Insertar/autores/agregar"); //Cambiar Ruta de End Point
 >>>>>>> e8cdb30 (Nuevo formato Json)
+=======
+        URL url = new URL(WSINSERTAR_URL);
+>>>>>>> dc1634f (Agregando CONSTANTES para mejor consumo de los WS)
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -99,10 +114,14 @@ public class WSAutor {
     // Actualizar un autor existente
     public void actualizarAutor(Autor autor) throws Exception {
 <<<<<<< HEAD
+<<<<<<< HEAD
         URL url = new URL(WS_URL + "/" + autor.getId_autor());
 =======
         URL url = new URL("http://192.168.191.240:8080/WSUpdatBiblioteca/ws/Updates/Autores" + "/" + autor.getId_autor());  //Cambiar Ruta de End Point
 >>>>>>> e8cdb30 (Nuevo formato Json)
+=======
+        URL url = new URL(WSUPDATE_URL + "/" + autor.getId_autor());
+>>>>>>> dc1634f (Agregando CONSTANTES para mejor consumo de los WS)
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");

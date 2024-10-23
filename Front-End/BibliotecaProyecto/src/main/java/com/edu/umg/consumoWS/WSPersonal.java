@@ -18,14 +18,22 @@ import java.util.List;
 
 public class WSPersonal {
 <<<<<<< HEAD
+<<<<<<< HEAD
     private static final String WS_URL = "http://192.168.191.142:8080/WSBiblioteca/webresources/personal";
 =======
 >>>>>>> e8cdb30 (Nuevo formato Json)
 
+=======
+    //Agregar aca los Endpoints de cada WS
+    private static final String WSLISTAR_URL=" ";
+    private static final String WSINSERTAR_URL=" ";
+    private static final String WSUPDATE_URL=" ";
+    
+>>>>>>> dc1634f (Agregando CONSTANTES para mejor consumo de los WS)
     // Obtener todos los personales
     public List<Personal> obtenerPersonal() throws Exception {
         List<Personal> personalList = new ArrayList<>();
-        URL url = new URL("http://192.168.191.135:8080/WSListar/ws/listar/personal");
+        URL url = new URL(WSLISTAR_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -73,7 +81,7 @@ public class WSPersonal {
 
     // Crear un nuevo personal
     public void crearPersonal(Personal personal) throws Exception {
-        URL url = new URL("http://192.168.191.112:8082/WSInsert/ws/Insertar/personal/agregar");
+        URL url = new URL(WSINSERTAR_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -112,7 +120,7 @@ public class WSPersonal {
 
     // Actualizar un personal existente
     public void actualizarPersonal(Personal personal) throws Exception {
-        URL url = new URL("http://192.168.191.240:8080/WSUpdatBiblioteca/ws/Updates/Personal" + "/" + personal.getId_personal());
+        URL url = new URL(WSUPDATE_URL + "/" + personal.getId_personal());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");

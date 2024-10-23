@@ -21,14 +21,22 @@ import java.util.List;
 
 public class WSPrestamo {
 <<<<<<< HEAD
+<<<<<<< HEAD
     private static final String WS_URL = "http://192.168.191.142:8080/WSBiblioteca/webresources/prestamos";
 =======
 >>>>>>> e8cdb30 (Nuevo formato Json)
 
+=======
+    
+    //Agregar aca los Endpoints de cada WS
+    private static final String WSLISTAR_URL=" ";
+    private static final String WSINSERTAR_URL=" ";
+    private static final String WSUPDATE_URL=" ";
+>>>>>>> dc1634f (Agregando CONSTANTES para mejor consumo de los WS)
     // Obtener todos los préstamos
     public List<Prestamo> obtenerPrestamos() throws Exception {
         List<Prestamo> prestamos = new ArrayList<>();
-        URL url = new URL("http://192.168.191.135:8080/WSListar/ws/listar/prestamos");
+        URL url = new URL(WSLISTAR_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -112,7 +120,7 @@ public class WSPrestamo {
 
     // Crear un nuevo préstamo
     public void crearPrestamo(Prestamo prestamo) throws Exception {
-        URL url = new URL("http://192.168.191.112:8082/WSInsert/ws/Insertar/prestamos/agregar");
+        URL url = new URL(WSINSERTAR_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -150,7 +158,7 @@ public class WSPrestamo {
 
     // Actualizar un préstamo existente
     public void actualizarPrestamo(Prestamo prestamo) throws Exception {
-        URL url = new URL("http://192.168.191.240:8080/WSUpdatBiblioteca/ws/Updates/Prestamos" + "/" + prestamo.getId_prestamo());
+        URL url = new URL(WSUPDATE_URL + "/" + prestamo.getId_prestamo());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");

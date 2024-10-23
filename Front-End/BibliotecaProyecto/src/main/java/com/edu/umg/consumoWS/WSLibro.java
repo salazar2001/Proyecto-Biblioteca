@@ -19,15 +19,22 @@ import java.util.List;
 
 public class WSLibro {
 <<<<<<< HEAD
+<<<<<<< HEAD
     private static final String WS_URL = "http://192.168.191.142:8080/WSBiblioteca/webresources/libros";
 =======
 
 >>>>>>> e8cdb30 (Nuevo formato Json)
 
+=======
+    //Agregar aca los Endpoints de cada WS
+    private static final String WSLISTAR_URL=" ";
+    private static final String WSINSERTAR_URL=" ";
+    private static final String WSUPDATE_URL=" ";
+>>>>>>> dc1634f (Agregando CONSTANTES para mejor consumo de los WS)
     // Obtener todos los libros
     public List<Libro> obtenerLibros() throws Exception {
         List<Libro> libros = new ArrayList<>();
-        URL url = new URL("http://192.168.191.135:8080/WSListar/ws/listar/libros");
+        URL url = new URL(WSLISTAR_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -90,7 +97,7 @@ public class WSLibro {
 
     // Crear un nuevo libro
     public void crearLibro(Libro libro) throws Exception {
-        URL url = new URL("http://192.168.191.112:8082/WSInsert/ws/Insertar/libros/agregar");
+        URL url = new URL(WSINSERTAR_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -132,7 +139,7 @@ public class WSLibro {
 
     // Actualizar un libro existente
     public void actualizarLibro(Libro libro) throws Exception {
-        URL url = new URL("http://192.168.191.240:8080/WSUpdatBiblioteca/ws/Updates/Libros" + "/" + libro.getId_libro());
+        URL url = new URL(WSUPDATE_URL + "/" + libro.getId_libro());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");
