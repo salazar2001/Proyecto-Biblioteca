@@ -15,12 +15,15 @@ import java.util.Date;
 import java.util.List;
 
 public class WSUsuario {
-    private static final String WS_URL = "http://localhost:8080/WSBiblioteca/webresources/usuarios";
-
+        //Agregar aca los Endpoints de cada WS
+    private static final String WSLISTAR_URL=" ";
+    private static final String WSINSERTAR_URL=" ";
+    private static final String WSUPDATE_URL=" ";
+    
     // Obtener todos los usuarios
     public List<Usuario> obtenerUsuarios() throws Exception {
         List<Usuario> usuarios = new ArrayList<>();
-        URL url = new URL(WS_URL);
+        URL url = new URL(WSLISTAR_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -57,47 +60,11 @@ public class WSUsuario {
 
         return usuarios;
     }
-
-    // Obtener un usuario por ID
-    public Usuario obtenerUsuarioPorId(int id) throws Exception {
-        URL url = new URL(WS_URL + "/" + id);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Accept", "application/json");
-
-        if (conn.getResponseCode() != 200) {
-            throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-        }
-
-        BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-        StringBuilder sb = new StringBuilder();
-        String output;
-        while ((output = br.readLine()) != null) {
-            sb.append(output);
-        }
-        conn.disconnect();
-
-        // Parsear JSON
-        JSONParser parser = new JSONParser();
-        JSONObject jsonUsuario = (JSONObject) parser.parse(sb.toString());
-        Usuario usuario = new Usuario();
-        usuario.setId_usuario(((Long) jsonUsuario.get("id_usuario")).intValue());
-        usuario.setNombre((String) jsonUsuario.get("nombre"));
-        usuario.setApellido((String) jsonUsuario.get("apellido"));
-        usuario.setCorreo((String) jsonUsuario.get("correo"));
-        usuario.setTelefono((String) jsonUsuario.get("telefono"));
-        usuario.setFecha_nacimiento(DateUtil.dateFromString((String) jsonUsuario.get("fecha_nacimiento")));
-        usuario.setFecha_registro(DateUtil.dateFromString((String) jsonUsuario.get("fecha_registro")));
-        usuario.setEstado((String) jsonUsuario.get("estado"));
-
-        return usuario;
-    }
-
-  
+ 
 
     // Crear un nuevo usuario
     public void crearUsuario(Usuario usuario) throws Exception {
-        URL url = new URL(WS_URL);
+        URL url = new URL(WSINSERTAR_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -130,7 +97,7 @@ public class WSUsuario {
 
     // Actualizar un usuario existente
     public void actualizarUsuario(Usuario usuario) throws Exception {
-        URL url = new URL(WS_URL + "/" + usuario.getId_usuario());
+        URL url = new URL(WSUPDATE_URL + "/" + usuario.getId_usuario());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -159,21 +126,4 @@ public class WSUsuario {
         conn.disconnect();
     }
 
-/*
-    // Métodos de conversión de fecha
-    private String dateToString(Date date) {
-        if (date == null) {
-            return null; // O puedes devolver una cadena vacía según tu preferencia
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(date);
-    }
-
-    private Date dateFromString(String dateString) throws ParseException {
-        if (dateString == null || dateString.isEmpty()) {
-            return null; // O puedes manejar esto de otra manera
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.parse(dateString);
-    }*/
 }

@@ -5,13 +5,14 @@ import com.edu.umg.entity.Autor;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name = "autorBean")
-@SessionScoped
+@ViewScoped
 public class AutorBean implements Serializable {
 
     private List<Autor> autores;        // Lista de autores para mostrar en la tabla
