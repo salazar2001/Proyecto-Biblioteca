@@ -46,7 +46,7 @@ public class PrestamoBean implements Serializable {
         cargarPrestamo();
         
         prestamoEditar = new Prestamo();
-        nuevoPrestamo = new Prestamo();         // Inicializa el objeto nuevoLibro       
+        nuevoPrestamo = new Prestamo();              
         
     }
     
@@ -85,31 +85,33 @@ public class PrestamoBean implements Serializable {
     
     // Método para agregar un nuevo libro
     public void agregarPrestamo() {
-        try {
-            
-                if ("disponible".equals(libroSeleccionado.getEstado().toLowerCase())) {
-                nuevoPrestamo.setLibro(libroSeleccionado);
-                libroSeleccionado.setEstado("no-disponible");
-                wsLibro.actualizarLibro(libroSeleccionado);
-            }
+        try {           
         
             nuevoPrestamo.setLibro(libroSeleccionado);
             nuevoPrestamo.setUsuario(usuarioSeleccionado);
             wsPrestamo.crearPrestamo(nuevoPrestamo);
             
+            if ("disponible".equals(libroSeleccionado.getEstado().toLowerCase())) {
+                libroSeleccionado.setEstado("no-disponible");
+                wsLibro.actualizarLibro(libroSeleccionado);
+            }
             nuevoPrestamo = new Prestamo(); 
             cargarPrestamo();
+                        
+            FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_INFO, 
+            "Éxito", "Préstamo agregado correctamente."));
 
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, 
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                "Error", "No se pudo agregar el prestamo: " + e.getMessage()));
+                "Error", "Error al agregar el préstamo: WebService no responde"));
         }
     }
     
     // Método para preparar la edición de un préstamo
     public void prepararEdicion(Prestamo prestamo) {
-        this.prestamoEditar = prestamo; // Asigna el préstamo seleccionado a la propiedad prestamoEditar
+        this.prestamoEditar = prestamo; 
         
     }
     
@@ -118,31 +120,26 @@ public class PrestamoBean implements Serializable {
     // Método para actualizar un préstamo existente
     public void actualizarPrestamo() {      
         try {
-                // Llamar al método del WS para actualizar el préstamo
                 wsPrestamo.actualizarPrestamo(prestamoEditar);
-                
-        
+                       
                 if("entregado".equals(prestamoEditar.getEstado().toLowerCase())){
                     Libro libro = prestamoEditar.getLibro();
                     libro.setEstado("disponible");
             
-                    // Llamar al WS para actualizar el libro
                     wsLibro.actualizarLibro(libro);
                 }
-            
-            // Limpiar la selección
             
             prestamoEditar = new Prestamo();
             cargarPrestamo();
 
-            // Mensaje de éxito
             FacesContext.getCurrentInstance().addMessage(null, 
                 new FacesMessage(FacesMessage.SEVERITY_INFO, 
                 "Éxito", "Préstamo actualizado correctamente."));
         } catch (Exception e) {
+            cargarPrestamo();
             FacesContext.getCurrentInstance().addMessage(null, 
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                "Error", "No se pudo actualizar el préstamo: " + e.getMessage()));
+                "Error", "Error al actualizar el préstamo: WebService no responde"));
         }
     }
 
@@ -155,18 +152,13 @@ public class PrestamoBean implements Serializable {
         cargarUsuarios();
     }
     
-    
-    
-    
-    
     public void seleccionarLibro() throws Exception{
         if(libroSeleccionado != null){
 
                 nuevoPrestamo.setLibro(libroSeleccionado);
         }
     }
-    
-    
+   
     public void seleccionarUsuario(){
         if(usuarioSeleccionado != null){
             nuevoPrestamo.setUsuario(usuarioSeleccionado);

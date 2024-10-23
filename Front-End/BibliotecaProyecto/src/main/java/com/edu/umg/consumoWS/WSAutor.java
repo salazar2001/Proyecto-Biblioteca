@@ -16,9 +16,12 @@ import java.util.List;
 
 public class WSAutor {
     //Agregar aca los Endpoints de cada WS
-    private static final String WSLISTAR_URL=" ";
-    private static final String WSINSERTAR_URL=" ";
-    private static final String WSUPDATE_URL=" ";
+    private static final 
+            String WSLISTAR_URL="http://192.168.0.100:8083/WSListar-1.0-SNAPSHOT/ws/listar/autores";
+    private static final 
+            String WSINSERTAR_URL="http://192.168.0.110:8082/WSInsertar-1.0-SNAPSHOT/ws/insertar/autor";
+    private static final String 
+            WSUPDATE_URL="http://192.168.0.104:8084/WSUpdate-1.0-SNAPSHOT/ws/actualizar/autor";
     // Obtener todos los autores
     public List<Autor> obtenerAutores() throws Exception {
         List<Autor> autores = new ArrayList<>();

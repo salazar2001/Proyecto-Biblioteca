@@ -19,9 +19,12 @@ import java.util.List;
 
 public class WSLibro {
     //Agregar aca los Endpoints de cada WS
-    private static final String WSLISTAR_URL=" ";
-    private static final String WSINSERTAR_URL=" ";
-    private static final String WSUPDATE_URL=" ";
+    private static final 
+            String WSLISTAR_URL="http://192.168.0.100:8083/WSListar-1.0-SNAPSHOT/ws/listar/libros";
+    private static final 
+            String WSINSERTAR_URL="http://192.168.0.110:8082/WSInsertar-1.0-SNAPSHOT/ws/insertar/libro";
+    private static final 
+            String WSUPDATE_URL="http://192.168.0.104:8084/WSUpdate-1.0-SNAPSHOT/ws/actualizar/libro";
     // Obtener todos los libros
     public List<Libro> obtenerLibros() throws Exception {
         List<Libro> libros = new ArrayList<>();
